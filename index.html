@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>WARMGLOW — Ferrari · Lamborghini · Rolls-Royce · RHD 2022+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0a07; --bg2:#17100b; --card:#1c140e; --line:rgba(255,200,150,.12);
+  --text:#f6ebdf; --muted:#b9a593; --dim:#7d6a5b;
+  --glow1:#f38c47; --glow2:#ffc957; --glow3:#ee6a3c; --gold:#f8b765;
+  --radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-weight:400;line-height:1.5;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:-20vmax;z-index:-2;pointer-events:none;
+  background:
+   radial-gradient(40vmax 30vmax at 15% 5%, rgba(255,122,47,.28), transparent 60%),
+   radial-gradient(35vmax 28vmax at 90% 15%, rgba(255,77,61,.18), transparent 60%),
+   radial-gradient(45vmax 35vmax at 50% 110%, rgba(255,179,92,.16), transparent 60%);
+  filter:blur(10px);animation:drift 24s ease-in-out infinite alternate}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes drift{to{transform:translate3d(-3vmax,2vmax,0) scale(1.06)}}
+a{color:inherit}
+.wrap{max-width:1320px;margin:0 auto;padding:0 28px}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(15,10,7,.55);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}.logo img{height:34px;width:auto;filter:drop-shadow(0 0 10px rgba(243,140,71,.45))}.logo b{font:500 17px Inter;letter-spacing:.32em;background:linear-gradient(90deg,var(--glow1),var(--glow2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-r{display:flex;gap:10px;align-items:center}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);border-radius:999px;padding:8px 14px;font:500 13px Inter;cursor:pointer;transition:.25s}
+.pill:hover{border-color:rgba(255,180,110,.45);background:rgba(255,150,80,.08)}
+.pill.on{background:linear-gradient(135deg,var(--glow2),var(--glow1));color:#1a0d05;border-color:transparent;box-shadow:0 6px 24px -6px rgba(255,122,47,.7)}
+
+/* Hero */
+header.hero{padding:96px 0 64px;text-align:center;position:relative}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(243,194,122,.25);border-radius:999px;padding:7px 14px;background:rgba(243,194,122,.06)}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--glow2);box-shadow:0 0 10px var(--glow2)}
+h1{font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(44px,7.4vw,104px);line-height:.98;letter-spacing:-.02em;margin:26px auto 18px;max-width:14ch}
+h1 em{font-style:italic;background:linear-gradient(100deg,var(--glow2),var(--glow1) 45%,var(--glow3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--muted);max-width:620px;margin:0 auto;font-size:17px;font-weight:300}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:38px}
+.stat{min-width:150px;padding:16px 22px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01))}
+.stat b{display:block;font-family:"Instrument Serif",serif;font-weight:400;font-size:34px;line-height:1}
+.stat span{font-size:12px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+
+/* Brand tiles */
+.brands{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:34px 0 8px}
+@media(max-width:820px){.brands{grid-template-columns:repeat(2,1fr)}}
+.btile{position:relative;overflow:hidden;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.01));padding:22px 20px 18px;cursor:pointer;text-align:left;color:var(--text);font:inherit;display:flex;flex-direction:column;gap:14px;min-height:170px;transition:.35s}
+.btile::after{content:"";position:absolute;width:220px;height:220px;right:-70px;bottom:-110px;border-radius:50%;background:radial-gradient(circle,var(--tint),transparent 70%);opacity:.18;transition:.45s}
+.btile:hover{border-color:rgba(248,183,101,.4);transform:translateY(-3px)}
+.btile:hover::after{opacity:.35}
+.btile.on{border-color:transparent;background:linear-gradient(160deg,rgba(243,140,71,.2),rgba(255,201,87,.05));box-shadow:0 0 0 1px rgba(255,201,87,.55) inset,0 24px 60px -30px rgba(243,140,71,.8)}
+.btile.on::after{opacity:.5}
+.emblem{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,201,87,.35);background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.12),rgba(0,0,0,.25));font-family:"Instrument Serif",serif;font-size:26px;letter-spacing:.02em;color:var(--glow2);box-shadow:0 0 24px -6px var(--tint)}
+.emblem img{max-width:70%;max-height:70%;object-fit:contain}
+.btile .bn{font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:14px}
+.btile .bo{font-size:12px;color:var(--dim);margin-top:2px}
+.btile .bc{position:absolute;top:18px;right:20px;font-family:"Instrument Serif",serif;font-size:34px;line-height:1;color:var(--muted)}
+.btile.on .bc{color:var(--glow2)}
+/* Picks */
+.pickbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill.star{border-color:rgba(255,201,87,.45);color:var(--glow2)}
+.pill.star.on{color:#1a0d05}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:-2px 0 10px}
+.tag{font-size:11px;letter-spacing:.04em;padding:4px 9px;border-radius:999px;border:1px solid rgba(255,201,87,.28);color:var(--gold);background:rgba(243,140,71,.08)}
+.tag.value{background:linear-gradient(135deg,rgba(255,201,87,.25),rgba(243,140,71,.2));color:#ffe2b0}
+.badge.pk{left:auto;right:14px;top:48px;background:linear-gradient(135deg,var(--glow2),var(--glow1));color:#1a0d05;border:none;font-weight:600}
+.pickbox{border-radius:16px;padding:14px 16px;margin-bottom:18px;border:1px solid rgba(255,201,87,.3);background:rgba(255,201,87,.06);font-size:13px;color:var(--muted);line-height:1.6}
+.pickbox b{color:var(--glow2);font-weight:600;letter-spacing:.06em}
+/* Filters */
+.filters{padding:14px 0 4px}
+.frow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.frow+.frow{margin-top:10px}
+.flabel{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);width:86px;flex:none}
+.spacer{flex:1}
+select,input.rate{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:8px 14px;font:500 13px Inter;outline:none}
+select option{background:#1c140e}
+input.rate{width:92px;text-align:center}
+.count{font-size:13px;color:var(--muted)}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:22px;padding:22px 0 90px}
+.card{position:relative;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);overflow:hidden;cursor:pointer;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,border-color .45s;animation:rise .7s both}
+.card::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(255,179,92,.6),transparent 40%,transparent 60%,rgba(255,77,61,.45));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:.45s;pointer-events:none}
+.card:hover{transform:translateY(-6px);box-shadow:0 30px 70px -30px rgba(255,110,40,.55);border-color:transparent}
+.card:hover::before{opacity:1}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+.thumb{aspect-ratio:16/10.5;background:#241912;overflow:hidden;position:relative}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.card:hover .thumb img{transform:scale(1.06)}
+.thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(15,10,7,.85))}
+.badge{position:absolute;top:14px;left:14px;z-index:2;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:6px 11px;border-radius:999px;background:rgba(15,10,7,.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12)}
+.badge.r{left:auto;right:14px;color:var(--gold)}
+.cbody{padding:18px 20px 20px}
+.brand{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.cname{font-family:"Instrument Serif",serif;font-size:28px;line-height:1.1;margin:4px 0 12px}
+.meta{display:flex;gap:14px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.meta span{display:flex;align-items:center;gap:6px}
+.meta span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--glow1)}
+.price{display:flex;justify-content:space-between;align-items:flex-end;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.price .jp{font-size:21px;font-weight:500;letter-spacing:-.01em}
+.price small{display:block;font-size:11px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;font-weight:400}
+.price .my{text-align:right;color:var(--glow2);font-weight:500}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:80px 0}
+
+/* Detail */
+.detail{position:fixed;inset:68px 0 0 0;z-index:50;background:rgba(10,6,4,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:none;overflow-y:auto}
+.detail.open{display:block;animation:fade .35s}
+@keyframes fade{from{opacity:0}}
+.dpanel{max-width:1240px;margin:34px auto;padding:0 24px 60px}
+.dtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.dlayout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:28px}.dlayout>*{min-width:0}
+@media(max-width:960px){.dlayout{grid-template-columns:1fr}}
+.stage{position:relative;border-radius:var(--radius);overflow:hidden;background:#1a120c;border:1px solid var(--line);aspect-ratio:16/10.5;box-shadow:0 40px 120px -40px rgba(255,110,40,.5)}
+.stage img{width:100%;height:100%;object-fit:cover;display:block}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(15,10,7,.55);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(8px)}
+.nav-btn:hover{background:rgba(255,122,47,.6)}
+.nav-btn.p{left:14px}.nav-btn.n{right:14px}
+.counter{position:absolute;bottom:14px;right:16px;font-size:12px;padding:5px 10px;border-radius:999px;background:rgba(15,10,7,.6)}
+.strip{position:relative;display:flex;gap:10px;overflow-x:auto;padding:14px 2px 6px;scrollbar-width:thin}
+.strip img{width:104px;height:68px;object-fit:cover;border-radius:12px;opacity:.5;cursor:pointer;border:1px solid transparent;flex:none;transition:.25s}
+.strip img.on,.strip img:hover{opacity:1;border-color:var(--glow2)}
+.info{border-radius:var(--radius);border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));padding:28px}
+.info h2{font-family:"Instrument Serif",serif;font-weight:400;font-size:42px;line-height:1.02;margin:6px 0 22px}
+.pbox{border-radius:18px;padding:18px;background:radial-gradient(120% 140% at 0% 0%,rgba(255,122,47,.22),rgba(255,122,47,.03) 60%);border:1px solid rgba(255,160,90,.25);margin-bottom:22px}
+.prow{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0}
+.prow+.prow{border-top:1px dashed rgba(255,200,150,.14)}
+.prow span{color:var(--muted);font-size:13px}
+.prow b{font-weight:500;font-size:18px}
+.prow.big b{font-size:26px;font-family:"Instrument Serif",serif;font-weight:400}
+.prow.myr b{color:var(--glow2)}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.spec{padding:13px 0;border-bottom:1px solid var(--line)}
+.spec:nth-child(odd){padding-right:12px}
+.spec span{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.spec b{font-weight:500;font-size:15px}
+.note{font-size:12px;color:var(--dim);margin-top:16px;line-height:1.6}
+.src{display:inline-block;margin-top:18px;font-size:13px;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(243,194,122,.4)}
+footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--dim);font-size:12px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="logo" href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAACgCAYAAACBvws6AAATE0lEQVR42u2deZDdVZXHv+ec+/u9pTsJSdgpwzbggICyizpCUQFCWAScoLiATqnUTKlRB9QaSzMZpwYdIYK4gaUYkNFKq5QYYiBsAWeQmQkjgywiMAIaIASS9PLe+/3uvefMH+81abJA9+str/M7lVf93q9f0vl93ulzzz3bpcbXzj4UDp91CZ2Qe1W8lhC1nthrvGfIUwYAoyR1lmd6WfWTN1+PnVxcUC0LeD8RPpiDYXjAMTzgAJgITAymOAuFwDX11RRmULNh/rXhvW+QPZkZQFbgBrhAUAAvgBdSAO9c4EGMiIhBBCp4jL+XYoiq4EYIisQxRBghKHzUgs54ACcvm5RxfyPEKgtmJUTTTG1WItxdQB8Hk/KnRvVPiO5bzugir3RObSB7t7e4FEKZ48LIjLmGH7a4JwewbujFgavnrg05vVwuJ1+0XBFUC/s+nl5K1yduX+s5XF1r+O8LW0ykcGbG3S2cvnDli17pK0HxIMys0PAJ8MNnOP9sHu0aItrgCi0ff+C0cGUGtXsg6GPGcGNWhYxmpylkfRot3zL0Wsg4Aa8Kh+Dj43nQwFQQH3fgL5Gvg7CGifoKMz4BwLOXXYDaeiL4ItoyEdHCvQGQWLH3mcjwbKHaY5vT3NmktnTuHNb0cGPsK4Sq8uZ8K8NIEXNhPOlUfkcfWPF0AbwNyZaefaRGm0mCKsFOUNJ57PjwpOySZo57sLTD4HPSGPW3Snq7/9Hp98LRQDQ8X5Kux+n8nojmloSojZ3JlAZu1xydDKR7zIbHnkb2XSnTm5qlCeTYOGUQh0Zswt5cYgAmYhJ+C5gOJcbfGpOwj3c0Yu+Svl+c9Wj3y72b6MOrG0WKbXMRB9ldJzqP3d4mip8nKS+D2VGOqMsxdTNRmQmsatjegwjMhDITTROiKohOkcRdl/r4k3pX5d13LTrRFSalJf3fO+vw0h/t81H0wFIpOY4Shm8E+DxuLph5HTdAFYBas2qHYC6hMpdkP/O6n0Ta622HVY5o/Hz+D8vnrXh0p9bw7HtnHZGSfTHpTi8oV9PjfB7RGPAjKHLaupqJCBSjwQ8ExGCQinujOP64aPxS1jNvwbJlkJ1GwwcXL1u2IPWbaodH1n8od5XO8/2bIY9ZRIIAM4OveROhqnSX3huyeMK5cd4mwsrbbGfQcALs8avmlRq9fScZ4YpU5F15fRQaPbyfSqqG2IhwiezLafKd7OennTCc8N6UMCn7dLnTCbKYhd+ugJhOTBzZ1BCDgpkOYJdc3XvDyYdMeeDZt+cdyaofTYTfygQXgk5o1N6iQYNCUj66a0blX2s3nfqGKQvcrlhQUeELWeQkEMEHA01C1F7VYF7BZTlDSL5gy+fvCQBmW/9fOhp41j1wshM5O024mvvJraGJ0RCziHRacrGP9jfrbzhuOtHWO9GOBV775vx9ieULLpX98zxiR8iNmBqQKVj4M9Om73balDEpG77+rl0koSXCdFwISroD5Vo1KqQksxl6hK2YV5oSwIX79ibHx4pjCUF3qBIOMwA+glN5T8jttI4H/vI1c2eU0sqFMMyIXne4ol8zQKOBu5OD2CUnb6nlHQe8Arer60o+kDiZ7tVGXUpAAIQJjpvRqrHYiTUXmQCz+NZGhnd0LHBbtkAA2R/RHNRGhZqIwEIgJqhZjGZeTZWZQNL+rw21ynfUK6QrOSYty9yOBZ690H8gmX3Jgs72IY5uHRCCSwUGranpAzHq7THiYTME53jU2m4A4FgA7Pb4VX9R6sjgVXS8S0noLSLkgre2rIkIQaoJ8v78Zs3jchNqJEJrfY6aks4Iit21lu/uUveppJLsE/OAqGZtrRVZhKkeu/+BB84ze+JmIlhHASdByUDQtiOthKjq40D+a4L+S+WiFfdvUzsXgbO/PF1jLZ7CTv4qSbnLNxfokWm5V5DwYRZsLnoWLAd6YseYlI3fPmNmiPZOBdJ2AoHMBEkYpliNLPtkeuG2YQMALYaWL/jVEgMWWrR7zSyXNkyMKsBVxwDPwm7rqKNsOJkdwoaPkKEU22iFEQZCjC8a4fLSR1b9bjh/p/TYr56IuX7N1B6WlEfhmAN4cXfrKOBiMj0tub2JR54qd45hzH0xj5c8uzHePewPeTG0XF93b1R+Ck0NH/nvlgFEVsaMUrmzvBQ2IqL20gpmiD5uZOL7Dl64MhvJcksXr/Hm/dJQC//r0jbsSjDAaI7PXzzKrDVgoyM0XMmsDdzChKiWhxDujSHWB7NEI/k3So+vvMUY/0lJG7iiwsj2V6K34+5FU78elplATH0g/KT65/rzba0fi6HEyNrxQ00BGM0SYF+8+AhP/QJkJoCQxchP0OLVAW0nGdrbfFrzQyczOBy6s/TaE1lKTiezrAAg+sMzfbRTACcAuYVJvddB0kVPQzG+owBeSAG8AF5IARxFj8/oYuHKJE4EBB1sySFqjUMcUm815CsBYMeIMSYpKxXAR7J/YAoxIgMjN0CHmbc0VU1U0QA7LYCPQMrwD9Vzu1jJSIh1m4ZRhzwXIABAPTpLZKDqwtoC+EhMysW3Pmdm/0bb6x2jMZjdWgDf2kR0+lSLwkspgBfACymAFxufcZf+b87fkx2fCDUSx4rYdP22KUOvqzlLaaB/o79r14Urewvgw8/aHyll9wPHANQMNrjTbHl9/Opd5uBzExYNcX13lU8FUAAf/pBcJlItMUgQbQuwttnT3nKLz4ACKYqt/Ujb81hhCD6oaBwaSxlMHG6xCWq9TphAgM+VrVg0Cy+lkAJ4AbyQAngBvJBijB5G310Ix0gSbrmdg64oNdXWWtcYr3ZZB197lYMK4CPI8IHqoe5zUqs3xzIZbMvDF8leSbFi8/fITAmGGgaesQI4ht1Df1+M1E2EWrMMupXlG1qATDrEUHPzj+lg7uQ/sNtuWgAfpmSB75xWcWsQWg1G2yzO3+JaOuRaan04aXUsgA+34vj9y9cDWF94KRM0yKxwCws/vJACeAG8kAJ4AbwAXkgBvHM3UMVOE4AtWCD+3OxIxDBfCQQy3UoVechXbYVQtrjWCp9svsaAmhEYUKIHMND9qwI4gIcPfVgO8PufWJmeLgYZhh7C8Urkb4vXRLY5BPuq79nmlnM057SAAK35G9Ddt6oADuBNe7/DavxsiMECmbqtgG9pfF8BPrRUoxWeJbwKOA0CN/gnqYiHD7EYpGZmptvRcN0ecGwNfMj7afOEfisWzcJLKYAXUgAfH1GQgCBjMn+2AP76IlADUQTBQAQapwnwHQM8WIgEjM+s8I9dG8j4bm2Ey0Ie7nApw3UlYCaM9ek0HQHcFi1iSWgPADwex/MQwdInb3kojY1vqNpXoo//HGr5D0FWS0uCVvk/JqQQiHszgqRMLKOaNGyqbQ/42jj7gX3TiLkm5jBOByLRYihwx0sA7gBwh9104i7Bd5EC700SLvmgY3LOxOtquE4vWTQb1dFPZEbRsKtdd2K5La1I7QBhPhUGnqjzHujc1Rudp09H71eYkB+rxfR1ge89s5IlRk+CqEHtDLw1wKLCMT6Y9U2f395gzTDTlXj2RJsyev8tG3oz+2QMutpV3MQAp/N7YiBdC6Ks3R8S1VAqJQcScNRIQpkAsOnqM08osbvUIpLxPV9t27LrB1f+CTHe6Wu+V8ZAy4e1aHovm4iQt2vDzFpn3DCdumnJvLO2hLq9WpDalXPnOLGFaSU9TqORTVKXThL0Zpj9hlOeGOBJrGXRRne7DR8tLbtj0yT5wqbLTz2zduXcOa9VYDPwnTP2UZdcQsB5ed1DJ3EgBL3v1ofJ0WMYg8mxwzJMAwBmqMXR3DMBlNUDmOiYcrn0I9PYM3D13EVRnY9a8pEzdTURrkYnqaSktKhaSS/KfUxU2zt+YGx3ohBMVH14mSt5DPrHHOEwZhZt01VQMzgmEZEZ3ut7RUrHgTAgEh5jlZfQjT3B7iABVSNj/2iUmu04e/8JAz7jwGpv/9O1K9VwSMXxwfVc265qj9EQNSJx0i0lOcKCop6FN4NQA6G7nLoyEgbnEbkPRpOu25Ow06Tze2JDZY043ohERlfa2MLng6JR88jziES4mjjeVUTKWd687qOCdogj7SZpa0/lnFTt6ZDHbCwjatZyG300RDUYDCjCs8Dsl4/vz5W/btEeLaWCQsZbwxcv1heeajygwAsQxhRXxB0jHn7w1SuzRsNf7ht+TaVc5J8nJDy7y2dvuT2a3ROigQp+ExMPV8Wv8xCfKpVcYVkmAnh1Y3k5w3rMzAsXej7uwGlxT+4DLm94f32pIpsHOBYyPsDNQNMvWb5+oIGvNmrhpnLFEVOh6eOn4c3cKu3+uVv+wMr/1Kjl95dKggL6OCaRB0OrpU//4rcW8s80Gv73iSMkUkAf96x95ZLb7ovBFvoQnokKL0yFyzhewFtV0tY1bZ878xAvjCHeqEQhcfzKFItCMHbzUgZNC118rQewuvH1+euiDw96J58vd6V7WB6QB4UVfsz4FAKVP73i0erGY75huV7R6M+uz/L4O8eMcleKtI3jER0TymWHckkKDX+tQJctW7AEG57ien2P9+SBLuJ6PtPU9k4T2auZVbCWu2Ovcn9ocMJOq30j96EeMnuKCY4JB1mH10OOWwSKzu+JAKJdd9FPsb73tv5kE1FMP+QZn2HHAmtZI4MYrBV+FBCZwhBBAMzYDL/WgEWeMadclh+zaTlGK4BvF/yHlzYANACg72unXJcH9+/wgZ2QUYSQo9khWje4qfcUY68yNghRgERm516ofmL5Y7VvnTmtMCkjlGmXrloHYN2WZ83rVaeV8FK9ObJr8erGtsvlqAJYx8cQ3OQ3ixpo4cpsvH9MahYn7R7NAGoOv+Kdof3X1CRIrGCS5u+pGRQaD+qfZlMeuKkChqqAj//zNWdWR5nvbifuBACBwRkOeGrqA1cDYNYNlvfNKoW92msIALdtfpkAw3MOeAhPHaDcUasNtZOdMoiwSMKHkLnk9YpItyX5IfPezYZ3Wt7GMuAYRHgCMdxD5/fEjgEeYxQDJe2W2BHRNFU935Yt6B7plDZ2fJ4ru0Oi13a6tUDA8+j2/9dRi6YpDcQ8vtSOJY3BQIpKOi39bKPWv8CWLRhWnMCWLZDajXPfQcQHoN0SJQLUyO6+u8O62IjsMY16vZl5x9xWUwB762LQ4qy3d97rvf+560/pqmnfsUmpdBmYjgmN0XmVJ53UYcC7Pr7iBXF8GzMy4jZCmmYIIcI5eQNXkiuypWdcZNccnZiBbBG4+VjEBpBdNW/6LHGXJSzfIfCxbNbWiR0igA6Efpg9gRd3t447t2/gm/OPL5Xd7czozr0O65STV884aT6SaoJGLX+EmO4kRa+xbYrqa8RSJaNdnKNZYFzgym56zCOiGmgk4zta16Ui0Ea4Ixp9Lj3zlgcAdNZ0ZSH0eh8fc46PYgJrm+0v+YC3UkkOpUQORYjIfKgJuz41m1auuiocQbMIXw+vfFBtSUnA0X4vp/5yTUe2fm+o+WcAu46E+txo2j8IFIIi1ANCUDiWqrDskTiphjwi1ptaPRphIoSBvBZDfLZje+33unTVACnuMtCm0fbCm7W23Dp40pi1rjVfj2Y7SgCoxEBmPxWKSzt6uEHNda31dX9zCDrgmMbk9F2zzY8xGd3WPMsMluAPdPqtz3U08Jkf6+m1oDdaQv2S8Jj2wY+J+8oApYzQm9+DzK/q+PEdRLDePD6U5+GnuY9ZkuxYxY0EgkYYAcvSc1bdPyXmpex16aoBBf+jKX4jwthRkBMROGVYiA+qhoem1ICax/HcphjjMp+F5xM3+R0ZRAALIcLqYFqSnLPq3ikF/JiL1/iqk5+Z2r0haJzssmkRhiWch0b8sij/bHsBso6Oh9NHf/kCRV4SzP7LpYLJgs7CMMfwffkPGv38XTp7eW3KzrxK/+6XvzHQlVnD/7eaxtRN7C1JwmAhhLq/KWbhy7u8/5YNw2hT7WwxA2XXnj6PhD/Hjo8X5nIeor1yf0NiKa8Va9kqHrKt2bOt9zA3YTcLaHCfZPEC+usVT+8UU92IYKW1tVUhx99HtZtMkDthGg8TQwQwN6e+KVMNua4Odf+R4cCeMho+VNPr358/B7BPlaeVP0VBkWexGZ4dIw0XJnC3g6/7pznEr4rwfTh3xYPDzSJNyWJiW3rmnEzxIVIcnXa5s+EYse43B6RGArz1/aTEQMXB9+c1M7sTYj9O37Cuh45Z44eWbe90wJvpy+aN5z8481gILTTCLFJ7Z1JxXYNvMjUEbZVRbwFcmCCOAKFm1p0NPgvPwvEjFOwRdfGG0jkr/2cUsx2mppiB1lx7tDu4r3tGeXb1W5S4N1OzOaOiZjOZqVuEt5gVbohRAbI+CG0koboCGrN4o8/9td31lzfgY2vC4IdaAN+O9F9z2l4CqhKHFC55oxLNdwnPlZLMeqVmmkFQ05jHtUa4xyjemqv9PkGSl6vuZTr3FxvHohJrpxO7al6pt8v245TnsHK3uFbySI3gTNVoUwW2FuvjM2Nd9/j/FVUIAgTEybQAAAAASUVORK5CYII=" alt="WARMGLOW logo"><b>WARMGLOW</b></a>
+  <div class="nav-r">
+    <button class="pill on" data-lang="en">EN</button>
+    <button class="pill" data-lang="zh">中文</button>
+  </div>
+</div></nav>
+
+
+<section class="wrap"><div class="brands" id="brandRow"></div></section>
+<section class="filters"><div class="wrap">
+  <div class="frow" id="pickRow"><span class="flabel" data-t="picks"></span></div>
+  <div class="frow" id="modelRow"><span class="flabel" data-t="model"></span></div>
+  <div class="frow" id="srcRow"><span class="flabel" data-t="source"></span></div>
+  <div class="frow" style="margin-top:12px">
+    <span class="count" id="count"></span>
+    <span class="spacer"></span>
+    <select id="sort"></select>
+    <label class="count">1 JPY = <input class="rate" id="rate" type="number" step="0.0001"> MYR</label>
+  </div>
+</div></section>
+
+<main class="wrap"><div class="grid" id="grid"></div></main>
+
+<div class="detail" id="detail"><div class="dpanel">
+  <div class="dtop">
+    <button class="pill" id="back" data-t="back"></button>
+    <span class="count" id="dcount"></span>
+  </div>
+  <div class="dlayout">
+    <div>
+      <div class="stage">
+        <img id="dimg" alt="">
+        <button class="nav-btn p" id="prev" aria-label="Previous photo">‹</button>
+        <button class="nav-btn n" id="next" aria-label="Next photo">›</button>
+        <span class="counter" id="dctr"></span>
+      </div>
+      <div class="strip" id="strip"></div>
+    </div>
+    <div class="info" id="info"></div>
+  </div>
+</div></div>
+
+<footer><div class="wrap" data-t="foot"></div></footer>
+
+<script>
+/* Data from cornesmotors.com/usedcar & /usedcar/ferrari (the stock Cornes also lists on Carsensor), collected 20 Nov 2026. Picks: within each model, price (excl. tax) is fitted against year and mileage across these listings; a share of picks per model goes to the cars priced furthest below that line, with small bonuses for low mileage, newer cars and Cornes warranty.
+   Filter: Ferrari / Lamborghini / Rolls-Royce, right-hand drive, first registered 2022 or later.
+   Fields: id, brand, model, price incl. 10% tax (JPY), total payment (JPY), km, first reg (YYYY-MM), inspection, ext, int, store, cc, gearbox, image folder, images */
+const IMG = "https://static-cornes.s3.amazonaws.com/tzy0td2h07pi/public/web/master/";
+const RAW = [
+["a0J5i00000K5jXrEAJ","FERRARI","296 GTS",32800000,33000000,5400,"2023-12","車検整備付","Blu Corsa","Crema","OSF",2990,"8AT","ZFF01SMC000297341",["jghjUv6FrB.jpg","jcalW3uQs.jpg","HvyvgVENl.jpg","o4genYH2XC.JPG","R2nVgDRSM.jpg","FpABvNAAwA.jpg","H8pKr5XPKX.jpg","KtoGrUjbUV.jpg","Mbe4nH0MVl.jpg","q9SYsNY4zu.jpg","OE9XCplVk.jpg","vuKglKUlgN.jpg"]],
+["a0JTL000004k4uL2AQ","FERRARI","Roma Spider",35300000,35500000,800,"2025-04","2028/04","Grigio Silverstone","Nero","OSF",3850,"8AT","ZFF09RPC000315554",["v3SB9MQeWf.jpg","eWPsxGS2j.jpg","bwYpOkAcj.jpg","FhodfVZjN.jpg","zQDaBaD_h2.jpg","RUuQScs1Zg.jpg","libhRXg1Ol.jpg","PulnFiAO6C.jpg","DN8T7RzTAz.jpg","8v8C5eYg5g.jpg","2V3phtGR2f.jpg","KXDRBb6yKq.jpg"]],
+["a0J5i00000ERq38EAD","FERRARI","Portofino M",30800000,31100000,3700,"2023-06","2028/06","Rosso Corsa","Nero","SHF",3855,"8AT","ZFF02RPC000290174",["U8hwweSDw_.jpg","JYnR_nSgF_.jpg","AmGUE1lqZ8d.jpg","SpaMLTuzG.jpg","685F9SgWDa.jpg","xQY254PuHL.jpg","bSSb4Og9hh.jpg","hVl_fjkycK.jpg","X0n12AyiZ9.jpg","4hN-6r1bPW.jpg","FFjT0DwoFU.jpg","x7Q8Uzswo--.jpg"]],
+["a0J5i00000DS0x6EAD","FERRARI","Portofino M",28300000,28500000,2400,"2023-05","2028/06","Argento Nürburgring","Chocolate","OSF",3855,"8AT","ZFF02RPC000289525",["GmM3NR4Trn.jpg","52pkfbXfC.jpg","AcE4f0_Adv.jpg","HRNhVfsoB.jpg","e3_H2cAQcT.jpg","kyxi-e5hcZ.jpg","BOHsTX1jFb.jpg","iAo_UJSTD8.jpg","2u8fv1LUdb.jpg","Xi687SoqCb.jpg","5X3-oCisjj.jpg","EzzJkuPsbG.jpg"]],
+["a0J5i00000HSg21EAD","FERRARI","Portofino M",31500000,31800000,9700,"2023-09","2028/09","Verde British Racing","Cuoio","SHF",3855,"8AT","ZFF02RPC000294223",["sFQc1AW2SX.jpg","ZZyubJZQfN.jpg","IDvLNjD4f0.jpg","i4006nac6.jpg","6bthK1Ahgz.jpg","3Az4FM-_BW.jpg","F5k59TX-0W.jpg","ierYDjeU3H.jpg","KqF0sJpde2.jpg","zBo0_Yl7JN.jpg","pnj2dzDBwsy.jpg","2NbmHe9Isz.jpg"]],
+["a0JTL00000BZXsQ2AX","FERRARI","296 GTS",41800000,42000000,1000,"2025-10","2028/10","Rosso Imola","Rosso Ferrari","SHF",2990,"8AT","ZFF01SMC000323904",["mia1ZjhAkd.jpg","aIc_4878Ps.jpg","X-B5vySSK.jpg","BCenVEhVDy.jpg","3F4oQlkxYQ.jpg","XyGsN4fdrD.jpg","0PdD1WniNt.jpg","AIHfl1mqGu.jpg","iIeE4QUVsc.jpg","4GwfydDyxY.jpg","Qqw60YOgzG.jpg","OgGvnI2Q7sF.jpg"]],
+["a0JTL00000AIGAE2A5","FERRARI","Roma Spider",39800000,40000000,200,"2025-10","2028/10","Bianco Avus","Pelle Bianca","OSF",3850,"8AT","ZFF09RPC000323516",["ZzhET1mre6.jpg","IRueXH0Ma.jpg","i5otA36ka.jpg","wzjqooNePoZ.jpg","ZZ5gpy9Dfzz.jpg","3Lc2KNki1H.jpg","8536KT3GF7.jpg","OCcwhhym7n.jpg","t4-TVIW2tQ.jpg","zifGu0qlK2.jpg","hCqzIApi9z.jpg","nokoW2kinE.jpg"]],
+["a0J5i000005FvrEEAS","FERRARI","F8 Tributo",41300000,41500000,4500,"2022-08","2027/08","Rosso Corsa","Rosso Ferrari","OSF",3902,"7AT","ZFF92LMC000279084",["ybQPzNqYw6.jpg","PuUgXxQFL.jpg","0Mx18S4rD.jpg","7Xn3tETeCC.jpg","nkIfaHYXrH.jpg","oyp0T0M5wS.jpg","jnDJE6GuNk.jpg","FxX1_2XSkj.jpg","KTy5ql60TX.jpg","bjFWIIo1D9.jpg","N5JQQ6KaMO.jpg","jQ61DGEiTN.jpg"]],
+["a0JTL00000Fp6fS2AR","FERRARI","296 GTS",41800000,42000000,500,"2026-03","2029/03","Grigio Scuro","Beige Tradizione","SHF",2990,"8AT","ZFF01SMC000329790",["BKW4mlqQzC.jpg","rS0kV1Rv8o.jpg","qHHau6Mc9b.jpg","yBsUWx3rc.jpg","Dn-DvuLEV.jpg","Hguc_FQ2O3.jpg","JM_f7mquJI.jpg","fQsole7BJW.jpg","_u5FlTFa4S.jpg","CVSmmMKW6c.jpg","o57gtXuWi_.jpg","Y84i2go0pe.jpg"]],
+["a0JTL000008plEr2AI","FERRARI","Roma Spider",40800000,41100000,300,"2025-07","2028/07","Nero Daytona","Cuoio","SHF",3850,"8AT","ZFF09RPC000320381",["X7AR7BESlK.jpg","Tjlf2ddxgv.jpg","KKHCf3OiAO.jpg","QuvFAOFte.jpg","f0KKB09Wa.JPG","839QqxNJQF.jpg","cAsXuPllHx.jpg","tbFo1LSIF7.jpg","8XkXbfnOYm.jpg","gASI98lknJ.jpg","wMBKoy8QI5.jpg","IbduWm8WrV.jpg"]],
+["a0JTL00000MhTyB2AV","FERRARI","Roma Spider",34800000,35000000,2200,"2026-04","2029/04","Nero DS","Tortora","OSF",3850,"8AT","ZFF09RPC000332161",["R5YYkz1UeA.jpg","23q0b7swS.jpg","e5vX4TCVT.jpg","JRAvhIYwW-G.jpg","vh_NDFiB4g-.jpg","nJaZTf_A2u.jpg","kRCMrwijcE.jpg","8OKXMjnaiI.jpg","KHUCfBQxAh.jpg","ujhUHTawM-.jpg","jh7zSYuHPV.jpg","Y4IAJ4jC1x.jpg"]],
+["a0J5i00000I8GhvEAF","FERRARI","Portofino M",30800000,31000000,3200,"2023-11","車検整備付","Nero Daytona","Charcoal","OSF",3855,"8AT","ZFF02RPC000297449",["GuXIq41XH.jpg","VaWtXFN8g.jpg","w5es-RM2N82.jpg","EiazKbwuMIv.jpg","_be_ZYkH323.jpg","eM8fxCRNx.jpg","d-0IFv044e.jpg","2z4_ld2kKs.jpg","zSiBrJA4dp.jpg","7RAkmQyM_6.jpg","QqNGUt_QPr.jpg","de059B85swY.jpg"]],
+["a0J5i00000NFoHkEAL","FERRARI","Purosangue",66000000,66300000,11800,"2024-03","2027/03","Rosso F1-75 Opaco","Alcantara Nero","SHF",6496,"8AT","ZFF06VTC000300577",["bhGMObtsgD.jpg","DgXGZcfSZQ.jpg","0V39QNjhbN.jpg","QE5pV3Fi4.jpg","7LYxPr6hQ6.jpg","VtJx84-L8T.jpg","Q-_CCSDZeG.jpg","-BiI3-Wa4E.jpg","f1pfQNX24n.jpg","HSHfNq-YGT.jpg","bwmPuWTSyO.jpg","qTLuVCIkVNy.jpg"]],
+["a0J5i000004cqEnEAI","FERRARI","Portofino M",34800000,35000000,5000,"2022-06","2027/06","Rosso Corsa","Nero","OSF",3855,"8AT","ZFF02RPC000277699",["8-Sy93O2C.jpg","6RKBnebItcP.jpg","Dh7fzTVGA.jpg","k2KeDeEMpnM.jpg","sEQLjJLQhF.jpg","-Bs-83H1Y3.jpg","lKWG0kao5D.jpg","6AL0K_s5lp.jpg","tANOqTJSt5.jpg","reTODe8Gd6Z.jpg","fAqXDYZk0Xy.jpg","DT-29OXR21D.jpg"]],
+
+["a0JTL000008xKz02AE","LAMBO","Urus SE|CS",38800000,39000000,4265,"2025-07","2028/07","Bianco Icarus","Bicolor Leather with Contrast Stitching","LSH",3996,"8AT","ZPBED5ZL3SLA38126",["ueyU9wpcY.jpg","ZiuC4QtamW.jpg","zffa0oOfIJ.jpg","qRsb7hzK-V.jpg","E8Ig8tREHH.jpg","3a7M8ATEu1.jpg","R_kAkUMCgW.jpg","tUfPiz_8-T.jpg","3BgFFYwA-w.jpg","_ae8GftlhG4.jpg","rf3__Yn7if9.jpg","D0e06dWZkCS.jpg"]],
+["a0JTL00000FtKog2AF","LAMBO","Urus SE|CS",39800000,40000000,844,"2026-03","2029/03","Bianco Monocerus","Sportivo Leather with Special Trim","LSH",3996,"8AT","ZPBED5ZL8SLA41507",["pCpI9yDiZB.jpg","jzcK1pC6J8.jpg","3P7_uAY8mI.jpg","V1wXKv2w8aS.jpg","Ttkct4Ks7Mt.jpg","qGaAN1uUNbW.jpg","uGIy_u7ai0.jpg","1FetGkmEEPU.jpg","narKKCNysiS.jpg","nQG-31O3P1V.jpg","qpbj6_RR3VQ.jpg","pHzX_dwslof.jpg"]],
+["a0JJ300000650YtMAI","LAMBO","Urus Performante|CS",42980000,43180000,564,"2024-12","2027/12","Bianco Asopo Matt","Bicolor Sportivo Alcantara, Performante trim","LSH",3996,"8AT","ZPBEC3ZL7RLA33593",["FAYIyUf97SQ.jpg","uKr-s2v2eiU.jpg","WmT6j7LU-h_.jpg","_M_datG6KCJ.jpg","SonGnaaVAMQ.jpg","l4E8acMr_ai.jpg","PhTbZGKJZQK.jpg","_I8Sl6a4xju.jpg","zpOT_j6mm4v.jpg","SUN7wFLj8z4.jpg","QCVDeDFruw4.jpg","W_NGPdx32bz.jpg"]],
+["a0J5i00000JkZDGEA3","LAMBO","Urus Performante",44480000,44680000,677,"2023-12","車検整備付","Blu Cepheus","Bicolor Sportivo Alcantara, Performante trim","LSH",3996,"8AT","ZPBEC3ZL6PLA27538",["MKgFj-dquh.jpg","ExY2Ah046Vp.jpg","UoGqiHvNmI.jpg","iZARQhxLle.jpg","ikPXzGgLc.jpg","8EUmcslzfc.jpg","Wnrj5rt8zGw.jpg","ZrbJTH46K3.jpg","qPMFD9kZP7Z.jpg","GLwyAmcyq5.jpg","AR5i9KSdJQZ.jpg","q06pJwm6Nj.jpg"]],
+["a0JTL00000Ewgv12AB","LAMBO","Urus SE",42900000,43100000,515,"2026-04","2029/04","Oro Elios to Nero Helene","Classico Leather with Special Trim","LSH",3996,"8AT","ZPBED5ZL7SLA42017",["Hzvv9UkJG6o.jpg","FKJeFmi16c.jpg","aN7xVn9uXm.jpg","HKkWvms05l.jpg","e7YjtdVx6v.jpg","rR-E_MtFX.jpg","JHLhxh_JV9.jpg","P8eIxeXiuSY.jpg","qUeq9iE4gL.jpg","qqRoWk9flVY.jpg","0GyH0JMdr-.jpg","DsYOD8bd61s.jpg"]],
+["a0JTL00000FXBYl2AP","LAMBO","Urus SE",41980000,42180000,140,"2026-03","2029/03","Nero Helene","Bicolor Leather with Contrast Stitching","LSH",3996,"8AT","ZPBED5ZL8SLA41894",["btw9mKkmzS.jpg","Nqkj1qnQRy.jpg","c_hBFtWqSH.jpg","ifODibuzd3.jpg","iUe4CkbvxA.jpg","R1DKlCw9l3.jpg","E4FuDiPcqw.jpg","XzrpbCDLK-.jpg","kam-hdnJF0.jpg","z62H5Ucjr-u.jpg","kfZ4jn4Ui1s.jpg","L7IEI2lM-ol.jpg"]],
+["a0J5i00000LDN2eEAH","LAMBO","Huracán Sterrato",37800000,38000000,820,"2024-02","2027/02","Oro Elios","Bicolor Trim (Leather & Alcantara)","LSH",5204,"7AT","ZHWEG7ZF2RLA25697",["OPr8bMyld.jpg","lAjVGS-5En.jpg","TRNhBuuOs1.jpg","PFT7VZv3vr.jpg","5Kwkl9bIWM.jpg","kdpJrDLc7T.jpg","H6GMACu4L_.jpg","0ldEPjcfZl.jpg","zGIfcbaxyP.jpg","Rsc1hEJ5km.jpg","goLXQEzws3k.jpg","Shu03z-wvm.jpg"]],
+
+["a0JTL00000Fxdb12AB","ROLLSROYCE","Black Badge Cullinan Series II",68500000,68800000,1800,"2026-04","2029/04","Tempest Grey","Charles Blue / Arctic White","RRT",6749,"8AT","SCA42HA05TU234793",["O_mp_si3z.jpg","MuWktfD0St.jpg","huwcRWFKK.jpg","z8ukDAXLPn.jpg","6GrAOTRbrO.jpg","jeGv3-dr9d.jpg","RlFEohDsZd.jpg","-Mj9qqf4Xh.jpg","OAzGK-kdUj.jpg","e6VuIiV0Tq.jpg","0D87ZZLP-X.jpg","OOHhRcSqvG.jpg"]],
+["a0JTL000003pL772AE","ROLLSROYCE","Black Badge Spectre",53700000,54000000,4800,"2025-03","2028/03","Vapour Violet","Black / Peony Pink","RRO",0,"EV","SCATK4202SU229388",["j9aENOEac.jpg","IIZ60oaR2w.jpg","BQLgE1U6iU.jpg","01esYyW_Jd.jpg","DphIstxJWG.jpg","q4neFy77Ae.jpg","TgAPzSd_nH.jpg","Q4FAUr5AD4.jpg","jXA_oLNiHp.jpg","CdG66wsFM6.jpg","F8F5mNEEZ7.jpg","J_j4AZJ8oX.jpg"]],
+["a0JTL00000DuiDR2AZ","ROLLSROYCE","Black Badge Cullinan Series II",67800000,68200000,1900,"2026-01","2029/01","English White","Black / Blushing Pink","RRO",6749,"8AT","SCA42HA02TU233360",["MHx2GHHHF.jpg","iWOLIOl4ns.jpg","l5Ce9HR7XK.jpg","yMZwColO9O.jpg","WXmrkrXLAL.jpg","VFZuHyesEe.jpg","8Z6EbMkWmq.jpg","d2LHAc3pXl.jpg","eAOyXgftIz.jpg","3IlUZySv0I.jpg","0BHOAYjB5Z.jpg","QuEkjneWO5.jpg"]],
+["a0JTL00000Huwu12AB","ROLLSROYCE","Cullinan Series II",63500000,63800000,1700,"2026-05","2029/05","Arctic White","Grace White / Black / Mandarin","RRT",6749,"8AT","SCA12HA08TU235309",["NIaq5mYsZ.jpg","tc0MHs-cD6.jpg","uC8Lx3p6m.jpg","-7pvk9i1rK.jpg","UUtgtpVXGI.jpg","J2hYV416SA.jpg","MCsxvuwypu.jpg","v6iC0c7Gd.jpg","4HfOZDOB9n.jpg","D6cIsF1NVK.jpg","k58ebbfSO5.jpg","TcCUzxUYzB.jpg"]],
+["a0JTL00000O0OMH2A3","ROLLSROYCE","Ghost Series II",44000000,44300000,220,"2026-06","2029/06","Midnight Sapphire","Scivaro Grey / Charles Blue","RRT",6748,"8AT","SCA22GZ06TU236106",["tLyBlalNZ.jpg","cnsPIlHL4p.jpg","1ShGOgYFE.jpg","QdH-GLsAON.jpg","DjB8pFlfth.jpg","-848ToGGxi.jpg","ELMt2yLgRe.jpg","JFb4HKdK5g.jpg","18itAVW31m.jpg","BxrrDjrH3q.jpg","BJau8dbqN_.jpg","LSOFTeeP4N.jpg"]],
+["a0JTL000007XB3u2AG","ROLLSROYCE","Cullinan Series II",65000000,65300000,300,"2025-07","2028/07","Crystal over Selby Grey","Grace White / Turchese","RRT",6749,"8AT","SCA12HA07SU230830",["G3CrLeCXh.jpg","PWyfOtXqlQ.jpg","260KGNSvw.jpg","uG2I-XMU5J.jpg","sSqAx5eHu_.jpg","ZM9bjPdecP.jpg","4B_rzssdvF.jpg","A_UoX1YVdM.jpg","k3bmc9NiGa.jpg","yPwlJniE75.jpg","CGgOWiIrCq.jpg","7LBV2Hn5Xa.jpg"]],
+["a0JTL000003AJFn2AO","ROLLSROYCE","Black Badge Cullinan Series II",72500000,72800000,6800,"2025-02","2028/02","Midnight Sapphire","Mandarin / Navy Blue","RRT",6749,"8AT","SCA42HA02SU228755",["NaPNKcD-b.jpg","_rJX0186D.jpg","3HLobCl1z3.jpg","_bx_bMEfQ5.jpg","M-BFenFlj9.jpg","3h_1BRtaGf.jpg","YHef_kvxvB.jpg","v73GmnXEIU.jpg","fGT3rvqy1k.jpg","EeaC1sK8yX.jpg","ogJN6wuK7W.jpg","PXTozAFMDV.jpg"]],
+["a0JJ3000006OFFXMA4","ROLLSROYCE","Spectre",43800000,44100000,7600,"2024-12","2027/12","Black Diamond","Black / Mandarin","RRO",0,"EV","SCATK2205SU227784",["3pEr7k_Qm.jpg","BsGFIGTSIg.jpg","pQ5z5M4UnW.jpg","XtL-nhXoCY.jpg","IkZIB4Cn9D.jpg","wxBsjZjPvg.jpg","QQHAE2u7B2.jpg","6jmsl6OsND.jpg","mRfsz-t7E.jpg","fSBvozDWQu.jpg","7KMJMvUr65.jpg","Ljwy9h-YXd.jpg"]],
+["a0JJ3000008LATOMA4","ROLLSROYCE","Black Badge Cullinan Series II",68500000,68800000,2400,"2025-01","2028/01","Black","Grace White / Black","RRT",6749,"8AT","SCA42HA08SU228646",["BwMmxRbbt.jpg","_rH1NdsyW.jpg","5aXAFIAA8.jpg","cTjJvc3U3F.jpg","qfK8Wkol-p.jpg","4LLHiGXlSL.jpg","TCm46eOUNv.jpg","fk13UyM9an.jpg","hpMvxaOmDm.jpg","XOwpL0ftq.jpg","p9ixait9y8.jpg","TeNFnvu3-I.jpg"]]
+];
+
+const PICKS = {"a0J5i00000K5jXrEAJ": {"r": -0.076, "n": 6, "t": ["top", "value", "cornes"]}, "a0JTL00000Fp6fS2AR": {"r": -0.044, "n": 6, "t": ["fair", "lowkm", "new", "cornes"]}, "AU7456095050": {"r": -0.141, "n": 39, "t": ["top", "value", "lowkm", "new"]}, "AU7042085333": {"r": -0.108, "n": 39, "t": ["value", "lowkm"]}, "AU6908943864": {"r": -0.088, "n": 39, "t": ["value", "lowkm", "new"]}, "AU7185930642": {"r": -0.073, "n": 39, "t": ["value", "lowkm"]}, "AU7513043598": {"r": -0.1, "n": 9, "t": ["top", "value"]}, "a0J5i00000DS0x6EAD": {"r": -0.064, "n": 9, "t": ["value", "cornes"]}, "a0J5i000005FvrEEAS": {"r": null, "n": 1, "t": ["top", "cornes", "rare"]}, "AU7267372200": {"r": -0.1, "n": 10, "t": ["top", "value", "lowkm", "new"]}, "AU7086549375": {"r": -0.072, "n": 10, "t": ["value", "lowkm"]}, "a0JTL00000FtKog2AF": {"r": -0.044, "n": 14, "t": ["top", "fair", "lowkm", "new", "cornes"]}, "a0JTL00000FXBYl2AP": {"r": -0.028, "n": 14, "t": ["fair", "lowkm", "new", "cornes"]}, "AU7511711358": {"r": -0.048, "n": 14, "t": ["fair", "lowkm"]}, "a0JJ300000650YtMAI": {"r": -0.066, "n": 12, "t": ["top", "value", "lowkm", "cornes"]}, "AU6615438539": {"r": -0.086, "n": 12, "t": ["value"]}, "a0J5i00000JkZDGEA3": {"r": -0.05, "n": 12, "t": ["value", "lowkm", "cornes"]}, "a0J5i00000LDN2eEAH": {"r": 0, "n": 3, "t": ["top", "fair", "lowkm", "cornes"]}, "AU6164386996": {"r": -0.011, "n": 3, "t": ["fair", "lowkm"]}, "a0JJ3000008LATOMA4": {"r": -0.029, "n": 6, "t": ["top", "fair", "cornes"]}, "a0JTL00000DuiDR2AZ": {"r": -0.011, "n": 6, "t": ["fair", "new", "cornes"]}, "a0JTL000003pL772AE": {"r": null, "n": 1, "t": ["top", "cornes", "rare"]}, "a0JTL00000Huwu12AB": {"r": -0.023, "n": 3, "t": ["top", "fair", "new", "cornes"]}, "a0JTL000007XB3u2AG": {"r": 0, "n": 3, "t": ["fair", "lowkm", "new", "cornes"]}, "a0JTL00000O0OMH2A3": {"r": -0.12, "n": 2, "t": ["top", "value", "lowkm", "new", "cornes"]}, "a0JJ3000006OFFXMA4": {"r": -0.145, "n": 2, "t": ["top", "value", "cornes", "rare"]}, "AU7464162168": {"r": -0.049, "n": 7, "t": ["top", "fair"]}, "AU7500369538": {"r": -0.018, "n": 7, "t": ["fair"]}, "AU6615751005": {"r": null, "n": 1, "t": ["top", "lowkm", "new", "rare"]}, "AU7148829331": {"r": null, "n": 0, "t": ["top", "lowkm", "new", "rare"]}, "AU7486945148": {"r": -0.025, "n": 4, "t": ["top", "fair", "lowkm"]}, "AU6662074485": {"r": -0.019, "n": 4, "t": ["fair"]}};
+/* Optional: paste URLs of brand logo files you are licensed to use, e.g. FERRARI:"logos/ferrari.png". Empty = monogram. */
+const BRAND_LOGOS = {FERRARI:"", LAMBO:"", ROLLSROYCE:""};
+const BRAND_META = {ALL:{mono:"W",tint:"#f38c47"},FERRARI:{mono:"F",tint:"#e0402e",o:"Maranello · Italia"},LAMBO:{mono:"L",tint:"#e2b23a",o:"Sant\u2019Agata · Italia"},ROLLSROYCE:{mono:"RR",tint:"#8a8fb8",o:"Goodwood · England"}};
+const CS_RAW = [["AU7443257239", "FERRARI", "Roma Spider", 2025, "", "2028/01", 900, "Bianco Avus", "", 3900, "8AT", 34799000, 35009000, "AUTO STAGE", "Kanagawa", "588/510/U00054588510", "1_001,2_001,3_001,4_002,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054588510_001L.JPG", "", 0], ["AU7236338586", "FERRARI", "Roma Spider", 2024, "", "2027/11", 900, "Bianco Italia", "", 3900, "8AT", 34800000, 35069000, "Ferrari dealer Auto Cavallino", "Hyogo", "781/263/U00053781263", "1_001,2_001,3_001,4_001,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_002", "U00053781263_001L.JPG", "", 0], ["AU7528340439", "FERRARI", "Roma", 2023, "", "", 2000, "Bianco Avus", "", 3900, "8AT", 27800000, 28098000, "Ferrari dealer Auto Cavallino", "Hyogo", "887/784/U00054887784", "1_003,2_003,3_003,4_003,5_003,6_003,7_003,8_003,9_002,10_002,11_002,12_001", "U00054887784_003L.JPG", "", 0], ["AU7480394837", "FERRARI", "Roma Spider", 2026, "", "2029/10", 67, "Bianco Avus", "", 3900, "8AT", 36800000, 37100000, "Ferrari dealer Auto Cavallino", "Hyogo", "594/847/U00054594847", "1_002,2_002,3_002,4_002,5_002,6_002,7_003,8_001,9_001,10_001,11_001,12_001", "U00054594847_002L.JPG", "", 0], ["AU7441675404", "FERRARI", "Roma Spider", 2026, "", "2029/10", 117, "Nero Daytona", "", 3900, "8AT", 37800000, 38089000, "Ferrari dealer Auto Cavallino", "Hyogo", "528/855/U00054528855", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_002,12_002", "U00054528855_002L.JPG", "", 0], ["AU7340497067", "FERRARI", "Roma Spider", 2024, "", "2027/07", 230, "Bianco Italia", "", 3900, "8AT", 35900000, 36200000, "Ferrari dealer GRAN TESTA Kanazawa", "Ishikawa", "127/175/U00054127175", "1_003,2_003,3_003,4_003,5_003,6_003,7_003,8_003,9_003,10_003,11_003,12_003", "U00054127175_003L.JPG", "", 0], ["AU7507122382", "FERRARI", "Roma Spider", 2026, "", "2029/05", 745, "Grey", "", 3900, "8AT", 46000000, 46130000, "Aperta Nagoya", "Aichi", "744/884/U00054744884", "1_002,2_002,3_002,4_002,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_002", "U00054744884_002L.JPG", "", 0], ["AU6432203302", "FERRARI", "296 GTS", 2025, "", "2028/07", 80, "Black", "", 3000, "8AT", 51800000, 52000000, "Ferrari dealer Auto Speciale ALC Motors Group", "Shizuoka", "534/514/U00049534514", "1_003,2_003,3_003,4_003,5_003,6_003,7_003,8_003,9_003,10_003,11_003,12_003", "U00049534514_002L.JPG", "", 0], ["AU7401705835", "FERRARI", "Roma Spider", 2026, "", "2029/10", 62, "Gold", "", 3900, "8AT", 38500000, 39000000, "Ferrari dealer GRAN TESTA Nagano", "Nagano", "453/225/U00054453225", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054453225_002L.JPG", "", 0], ["AU7296175679", "FERRARI", "Roma Spider", 2025, "", "2028/07", 1000, "Bianco Cervino", "", 3900, "8AT", 37800000, 38080000, "Ferrari dealer Auto Cavallino", "Hyogo", "966/970/U00053966970", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00053966970_001L.JPG", "", 0], ["AU7456095050", "FERRARI", "Roma Spider", 2026, "", "2029/01", 1000, "Rosso Imola", "", 3900, "8AT", 32100000, 32500000, "Arc Gallery Chiba-Kita", "Chiba", "601/117/U00054601117", "1_002,2_002,3_002,4_002,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_002", "U00054601117_001L.JPG", "", 0], ["AU6615751005", "FERRARI", "296 GTB", 2025, "", "2028/09", 54, "Blu Abu Dhabi", "", 3000, "8AT", 44800000, 45000000, "Ferrari dealer Auto Speciale ALC Motors Group", "Shizuoka", "592/944/U00050592944", "1_004,2_004,3_004,4_004,5_004,6_004,7_004,8_004,9_005,10_005,11_005,12_005", "U00050592944_002L.JPG", "", 0], ["AU7415681036", "FERRARI", "Roma", 2023, "", "2028/10", 5000, "Grigio Silverstone", "", 3900, "8AT", 26800000, 27070000, "Nicole Competizione", "Kanagawa", "502/744/U00054502744", "1_002,2_001,3_002,4_002,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_002", "U00054502744_001L.JPG", "", 0], ["AU7337922097", "FERRARI", "Roma", 2024, "", "2027/05", 5000, "Grigio GTS", "", 3900, "8AT", 29800000, 30061000, "Nicole Competizione", "Kanagawa", "180/264/U00054180264", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054180264_001L.JPG", "", 0], ["AU7464162168", "FERRARI", "Roma", 2024, "", "2027/05", 4000, "Blu Roma", "", 3900, "8AT", 25800000, 26055000, "Nicole Competizione", "Kanagawa", "660/898/U00054660898", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054660898_001L.JPG", "", 0], ["AU7503252491", "FERRARI", "Purosangue", 2026, "", "2029/09", 1000, "Nero Purosangue", "", 6500, "8AT", 73000000, 73330000, "SKY TIMELESS Azabu", "Tokyo", "354/492/U00054354492", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054354492_001L.JPG", "", 0], ["AU7513043598", "FERRARI", "Portofino M", 2022, "", "2027/03", 4000, "White", "", 3900, "8AT", 27880000, 28000000, "Mr. Lion Ginan", "Gifu", "840/859/U00054840859", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054840859_001L.JPG", "", 0], ["AU7476859336", "FERRARI", "Purosangue", 2026, "2026-03", "2029/03", 920, "Bianco Italia", "", 6500, "8AT", 73000000, 73202000, "EDGE Group EDGE", "Osaka", "705/496/U00054705496", "1_002,2_002,3_002,4_002,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_001", "U00054705496_002L.JPG", "", 0], ["AU7407383232", "FERRARI", "Roma Spider", 2025, "", "2028/04", 5000, "Bianco Cervino", "", 3900, "8AT", 35800000, 36063000, "Nicole Competizione", "Kanagawa", "472/444/U00054472444", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054472444_001L.JPG", "", 0], ["AU7276690780", "FERRARI", "Roma", 2023, "", "2028/06", 8000, "Grigio Silverstone", "", 3900, "8AT", 26800000, 27000000, "Cornes Osaka Pre-owned Showroom", "Osaka", "560/874/UZ0053560874", "", "UZ0053560874_001L.JPG", "", 1], ["AU7500369538", "FERRARI", "Roma", 2025, "", "2028/09", 5000, "Grigio Silverstone", "", 3900, "8AT", 26480000, 26620000, "bond cars URAWA-HIGASHI", "Saitama", "689/559/U00054689559", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054689559_001L.JPG", "", 0], ["AU7441675616", "FERRARI", "Roma Spider", 2024, "", "2027/10", 800, "Nero Purosangue", "", 3800, "8AT", 34938000, 35000000, "Himawari Garden Kobe", "Hyogo", "564/060/U00054564060", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054564060_001L.JPG", "", 0], ["AU7461178831", "FERRARI", "Roma", 2022, "", "2027/11", 7000, "Pearl White", "", 3900, "8AT", 0, 0, "MIYOSHIAUTO", "Osaka", "648/270/U00054648270", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054648270_001L.JPG", "", 0], ["AU6772354358", "FERRARI", "Roma Spider", 2024, "", "2027/10", 700, "Bianco Italia", "", 3900, "8AT", 0, 0, "BLISS", "Hyogo", "477/083/U00051477083", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00051477083_001L.JPG", "", 0], ["AU7275324042", "FERRARI", "Roma Spider", 2025, "", "2028/10", 2000, "Nero DS", "", 3900, "8AT", 44300000, 44600000, "Cornes Shiba Showroom", "Tokyo", "876/188/UZ0053876188", "", "UZ0053876188_001L.JPG", "", 0], ["AU7005453227", "FERRARI", "Roma", 2024, "", "2027/05", 5000, "Cuoio", "", 3900, "8AT", 26800000, 27070000, "Belmond Holdings", "Gifu", "744/132/U00052744132", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00052744132_001L.JPG", "", 0], ["AU6983853652", "FERRARI", "Purosangue", 2025, "", "2028/09", 3000, "Grigio Granito", "", 6500, "8AT", 69800000, 70473000, "Ferrari dealer M Auto Italia", "Hiroshima", "667/045/U00052667045", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00052667045_001L.JPG", "", 0], ["AU7516732475", "FERRARI", "Roma Spider", 2026, "", "2029/10", 100, "Nero Galaxy", "", 3900, "8AT", 41965000, 42245000, "Ferrari dealer European Version HAKATA", "Fukuoka", "852/375/U00054852375", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_002,11_002,12_001", "U00054852375_001L.JPG", "", 0], ["AU6775096967", "FERRARI", "Portofino M", 2023, "", "2028/05", 4000, "Bianco Avus", "", 3900, "8AT", 28060000, 28161000, "TAX Senboku", "Osaka", "158/767/U00051158767", "1_006,2_007,3_005,4_005,5_005,6_005,7_005,8_005,9_005,10_005,11_005,12_005", "U00051158767_001L.JPG", "", 0], ["AU7254621885", "FERRARI", "Portofino M", 2023, "", "2028/03", 2000, "Bianco Avus", "", 3900, "8AT", 31200000, 31400000, "Rosso Scuderia", "Tokyo", "833/601/U00053833601", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00053833601_001L.JPG", "", 0], ["AU7040344844", "FERRARI", "Roma Spider", 2025, "", "2028/10", 1000, "White", "", 3900, "8AT", 34798000, 34958000, "Good Deal Osaka", "Osaka", "899/973/U00052899973", "1_002,2_003,3_007,4_003,5_003,6_003,7_003,8_003,9_002,10_003,11_003,12_003", "U00052899973_004L.JPG", "", 0], ["AU7484250345", "FERRARI", "Roma Spider", 2025, "", "2028/09", 4000, "Celeste Trevi", "", 3900, "8AT", 36998000, 37138000, "Good Deal Osaka", "Osaka", "738/366/U00054738366", "1_003,2_004,3_005,4_006,5_006,6_006,7_006,8_006,9_006,10_006,11_007,12_007", "U00054738366_002L.JPG", "", 0], ["AU7445640227", "FERRARI", "Roma Spider", 2024, "", "2027/07", 2000, "Black", "", 3900, "8AT", 34965000, 35238000, "Ferrari dealer European Version HAKATA", "Fukuoka", "500/333/U00054500333", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_002,9_002,10_002,11_002,12_002", "U00054500333_001L.JPG", "", 0], ["AU7438648837", "FERRARI", "Purosangue", 2025, "", "2028/04", 3000, "White", "", 6500, "8AT", 75998000, 76267000, "Ferrari dealer European Version HAKATA", "Fukuoka", "527/010/U00054527010", "1_001,2_001,3_001,4_001,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_002", "U00054527010_002L.JPG", "", 0], ["AU7062020651", "FERRARI", "Purosangue", 2024, "", "2027/05", 1000, "Nero Purosangue", "", 6500, "8AT", 73020000, 73312000, "Ferrari dealer European Version HAKATA", "Fukuoka", "977/901/U00052977901", "1_002,2_002,3_002,4_003,5_003,6_003,7_003,8_003,9_003,10_003,11_003,12_003", "U00052977901_004L.JPG", "", 0], ["AU7042085333", "FERRARI", "Roma Spider", 2025, "", "2028/05", 995, "Grigio Scuro", "", 3900, "8AT", 32500000, 32780000, "Front Line Konan", "Kanagawa", "831/013/U00052831013", "1_002,2_002,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_002,11_002,12_002", "U00052831013_001L.JPG", "", 0], ["AU7264151272", "FERRARI", "Roma Spider", 2025, "", "2028/06", 800, "Argento Nürburgring Opaco", "", 3900, "8AT", 35965000, 36266000, "Ferrari dealer European Version HAKATA", "Fukuoka", "820/599/U00053820599", "1_002,2_002,3_003,4_003,5_003,6_003,7_003,8_003,9_003,10_003,11_003,12_003", "U00053820599_003L.JPG", "", 0], ["AU6788132405", "FERRARI", "Roma Spider", 2024, "", "2027/06", 2000, "Bianco Avus", "", 3900, "8AT", 34800000, 35000000, "Cornes Osaka Pre-owned Showroom", "Osaka", "555/903/UZ0051555903", "", "UZ0051555903_001L.JPG", "", 0], ["AU6660741440", "FERRARI", "Roma Spider", 2024, "", "2027/09", 1000, "Blue", "Rosso Ferrari", 3900, "8AT", 36100000, 36300000, "Rosso Scuderia", "Tokyo", "890/265/U00050890265", "1_002,2_002,3_002,4_002,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_002", "U00050890265_001L.JPG", "", 0], ["AU7496931212", "FERRARI", "Roma Spider", 2026, "", "2029/04", 1000, "Rosso Imola", "", 3900, "8AT", 35965000, 36242000, "Ferrari dealer European Version HAKATA", "Fukuoka", "758/612/U00054758612", "1_001,2_001,3_003,4_005,5_005,6_005,7_005,8_005,9_005,10_005,11_005,12_005", "U00054758612_003L.JPG", "", 0], ["AU7086549375", "FERRARI", "Purosangue", 2024, "", "2027/12", 1000, "Rosso California", "", 6500, "8AT", 70965000, 71259000, "Ferrari dealer European Version HAKATA", "Fukuoka", "110/341/U00053110341", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00053110341_003L.JPG", "", 0], ["AU7069783379", "FERRARI", "Roma Spider", 2025, "", "2028/01", 2000, "Bianco Italia", "", 3900, "8AT", 35645000, 35926000, "Ferrari dealer European Version HAKATA", "Fukuoka", "026/682/U00053026682", "1_002,2_002,3_002,4_003,5_003,6_003,7_003,8_003,9_003,10_003,11_003,12_003", "U00053026682_003L.JPG", "", 0], ["AU7138053958", "FERRARI", "296 GTS", 2025, "", "2028/10", 900, "Rosso Ferrari", "", 3000, "8AT", 45800000, 46180000, "Moderno Collezione", "Aichi", "339/721/U00053339721", "1_001,2_001,3_001,4_001,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_002", "U00053339721_001L.JPG", "", 0], ["AU7236353135", "FERRARI", "Roma Spider", 2025, "", "2028/07", 1000, "Rosso Corsa", "", 3900, "8AT", 39800000, 40000000, "Rosso Scuderia", "Tokyo", "792/603/U00053792603", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00053792603_002L.JPG", "", 0], ["AU7267372200", "FERRARI", "Purosangue", 2026, "", "2029/02", 1000, "Rosso Corsa", "", 6500, "8AT", 63780000, 63980000, "Vento", "Tokyo", "858/861/U00053858861", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_002,9_002,10_002,11_002,12_002", "U00053858861_001L.JPG", "", 0], ["AU7487540435", "FERRARI", "Roma Spider", 2025, "", "2028/06", 2000, "Bianco Cervino", "", 3900, "8AT", 34800000, 35000000, "Rosso Scuderia", "Tokyo", "751/021/U00054751021", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054751021_001L.JPG", "", 0], ["AU7094967983", "FERRARI", "Roma Spider", 2024, "2024-05", "2027/05", 3000, "Grigio Silverstone", "", 3900, "8AT", 33200000, 33455000, "EDGE Group EDGE", "Osaka", "140/443/U00053140443", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_002", "U00053140443_002L.JPG", "", 0], ["AU7461633921", "FERRARI", "Portofino M", 2023, "", "2028/02", 108, "Bianco Cervino", "", 3900, "8AT", 30900000, 31035000, "World Star Enterprise", "Shizuoka", "610/442/U00054610442", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00054610442_001L.JPG", "", 0], ["AU7453809486", "FERRARI", "Roma Spider", 2025, "", "2028/07", 2000, "Nero Stellato", "", 3900, "8AT", 34980000, 35170000, "bond cars KATSUSHIKA", "Tokyo", "500/425/U00054500425", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_002,10_002,11_002,12_002", "U00054500425_002L.JPG", "", 0], ["AU6845848346", "FERRARI", "Roma Spider", 2024, "2024-08", "2027/08", 2000, "Bianco Avus", "", 3900, "8AT", 35000000, 35255000, "EDGE Group EDGE", "Osaka", "847/004/U00051847004", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00051847004_001L.JPG", "", 0], ["AU7524897749", "FERRARI", "296 GTS Assetto Fiorano", 2023, "", "2026/12", 1000, "Rosso Corsa", "", 3000, "8AT", 49500000, 49800000, "MAST", "Hyogo", "814/013/U00054814013", "1_002,2_002,3_002,4_002,5_002,6_002,7_002,8_002,9_002,10_002,11_002,12_002", "U00054814013_001L.JPG", "", 0], ["AU6922888237", "FERRARI", "Roma Spider", 2025, "", "2028/04", 1000, "Rosso Corsa", "Nero", 3900, "8AT", 34400000, 34600000, "Rosso Scuderia", "Tokyo", "305/895/U00052305895", "1_001,2_001,3_001,4_001,5_001,6_001,7_001,8_001,9_001,10_001,11_001,12_001", "U00052305895_002L.JPG", "", 0], ["AU6869641913", "FERRARI", "Roma Spider", 2026, "", "2029/02", 1000, "Red", "", 3900, "8AT", 36900000, 37100000, "Rosso Scuderia", "Tokyo", "003/166/U00052003166", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00052003166_002L.JPG", "", 0], ["AU6773121986", "FERRARI", "Purosangue", 2024, "", "2027/06", 300, "Light Beige Metallic", "", 6500, "8AT", 88800000, 90000000, "MSC Corporation", "Hokkaido", "481/857/U00051481857", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00051481857_001L.JPG", "", 0], ["AU7446352024", "FERRARI", "Roma Spider", 2026, "", "2029/01", 2000, "Bianco Cervino", "", 3900, "8AT", 37300000, 37500000, "Rosso Scuderia", "Tokyo", "600/893/U00054600893", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054600893_002L.JPG", "", 0], ["AU6987795703", "FERRARI", "Roma Spider", 2026, "", "2029/01", 700, "Nero Daytona", "", 3900, "8AT", 39450000, 39920000, "Dream Key", "Hyogo", "686/183/U00052686183", "1.3,2.3,3.3,4.3,5.3,6.3,7.3,8.4,9.3,10.3,11.3,12.3", "U00052686183_003L.JPG", "", 0], ["AU6690544998", "FERRARI", "Roma Spider", 2025, "", "2028/02", 500, "Argento Nürburgring", "", 3900, "8AT", 36000000, 36730000, "BLISS", "Hyogo", "085/875/U00051085875", "1.3,2.3,3.3,4.3,5.3,6.3,7.3,8.2,9.3,10.3,11.3,12.3", "U00051085875_003L.JPG", "", 0], ["AU6908943864", "FERRARI", "Roma Spider", 2026, "", "2029/01", 105, "Red", "", 3900, "8AT", 35080000, 35463000, "MRC Motors", "Shiga", "219/739/U00052219739", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00052219739_001L.JPG", "", 0], ["AU7411592836", "FERRARI", "Roma Spider", 2025, "", "2028/06", 476, "Vinaccia", "", 3900, "8AT", 39800000, 40200000, "Enman Corporation", "Osaka", "486/753/U00054486753", "1.1,2.3,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054486753_002L.JPG", "", 0], ["AU7148829331", "FERRARI", "12Cilindri", 2026, "", "2029/04", 287, "", "", 6500, "8AT", 0, 0, "LUSSO", "Osaka", "368/361/U00053368361", "1.5,2.2,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00053368361_005L.JPG", "", 0], ["AU7185930642", "FERRARI", "Roma Spider", 2025, "", "2028/06", 1000, "Blu Roma", "", 3900, "8AT", 33780000, 33980000, "AUTO SHOP 1 RiDING", "Hyogo", "530/552/U00053530552", "1.1,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00053530552_002L.JPG", "", 0], ["AU6665510626", "FERRARI", "Roma", 2023, "", "", 2000, "Silver", "", 3850, "AT", 0, 0, "Panda Jidosha", "Hyogo", "918/669/UZ0050918669", "", "UZ0050918669_001L.JPG", "", 0], ["AU7439521947", "FERRARI", "Roma", 2023, "", "2028/06", 4000, "Bianco Avus", "", 3900, "8AT", 26900000, 27150000, "CLOUD", "Osaka", "565/084/U00054565084", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054565084_002L.JPG", "", 0], ["AU6303210790", "LAMBO", "Huracán Sterrato", 2024, "", "2027/07", 300, "Metallic Gold Green", "", 5200, "7AT", 0, 0, "Lamborghini Azabu", "Tokyo", "644/655/U00048644655", "1.7,2.6,3.6,4.6,5.6,6.6,7.6,8.6,9.6,10.6,11.6,12.6", "U00048644655_001L.JPG", "", 0], ["AU7465128054", "FERRARI", "Purosangue", 2026, "", "2029/10", 57, "Grigio Medio", "", 6500, "8AT", 76000000, 76501000, "Familia", "Chiba", "665/231/U00054665231", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054665231_001L.JPG", "", 0], ["AU7522585594", "LAMBO", "Urus SE", 2025, "", "2028/10", 4000, "Black", "", 4000, "8AT", 39500000, 39828000, "Lamborghini Azabu", "Tokyo", "871/825/U00054871825", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054871825_001L.JPG", "", 0], ["AU7442173556", "LAMBO", "Urus SE", 2025, "", "2028/10", 3000, "White", "", 4000, "8AT", 42550000, 42844000, "Lamborghini Azabu", "Tokyo", "580/447/U00054580447", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054580447_001L.JPG", "", 0], ["AU7401892889", "LAMBO", "Urus SE", 2026, "", "2029/11", 6000, "White", "", 4000, "8AT", 38500000, 38905000, "Lamborghini Azabu", "Tokyo", "456/809/U00054456809", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054456809_001L.JPG", "", 0], ["AU7471781227", "LAMBO", "Urus Performante", 2024, "", "2027/12", 11000, "Gunmetal", "", 4000, "8AT", 40500000, 40800000, "Lamborghini Yokohama", "Kanagawa", "696/706/U00054696706", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.1", "U00054696706_001L.JPG", "", 0], ["AU6662074485", "LAMBO", "Urus S", 2024, "", "2027/10", 5000, "Grey", "", 4000, "8AT", 37300000, 37495000, "Lamborghini Sapporo", "Hokkaido", "891/580/U00050891580", "1.2,2.1,3.1,4.1,5.1,6.2,7.1,8.2,9.1,10.1,11.1,12.1", "U00050891580_003L.JPG", "", 0], ["AU7036962870", "LAMBO", "Urus Performante", 2024, "", "2027/08", 1000, "Grey Metallic", "", 4000, "8AT", 49300000, 49920000, "Lamborghini Azabu", "Tokyo", "808/866/U00052808866", "1.3,2.3,3.3,4.3,5.3,6.3,7.3,8.3,9.3,10.3,11.3,12.3", "U00052808866_001L.JPG", "", 0], ["AU7177689434", "LAMBO", "Urus Performante", 2023, "", "2028/06", 6000, "Matte Pearl", "", 4000, "8AT", 47900000, 48000000, "Kuruma no Mori Nakamozu", "Osaka", "517/820/U00053517820", "1.2,2.3,3.3,4.2,5.3,6.3,7.3,8.3,9.3,10.3,11.3,12.3", "U00053517820_001L.JPG", "", 0], ["AU7511711358", "LAMBO", "Urus SE", 2025, "", "2028/11", 1000, "Grigio Keres", "", 4000, "8AT", 39980000, 40220000, "Lamborghini Shinsaibashi", "Osaka", "834/556/U00054834556", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054834556_001L.JPG", "", 0], ["AU7486945148", "LAMBO", "Urus S", 2025, "", "2028/05", 835, "Nero Helene", "", 4000, "8AT", 39500000, 39671000, "Lopelaio Lope City Nishinomiya", "Hyogo", "701/540/U00054701540", "1.3,2.4,3.3,4.3,5.3,6.3,7.3,8.3,9.3,10.3,11.3,12.3", "U00054701540_003L.JPG", "", 0], ["AU7443035625", "LAMBO", "Urus SE", 2026, "", "2029/06", 1000, "Nero Helene", "", 4000, "8AT", 40500000, 40700000, "Lamborghini Shiba", "Tokyo", "516/515/U00054516515", "1.2", "U00054516515_001L.JPG", "", 1], ["AU7504630689", "LAMBO", "Urus SE", 2025, "", "2028/04", 4000, "Black", "", 4000, "8AT", 37700000, 37800000, "Shinozaki Jidosha Matsuyama", "Ehime", "802/375/U00054802375", "1.2,2.2,3.1,4.1,5.1,6.1,7.1,8.2,9.2,10.2,11.2,12.2", "U00054802375_002L.JPG", "", 0], ["AU7519292184", "LAMBO", "Urus SE", 2026, "", "2029/10", 60, "Nero Helene", "", 4000, "8AT", 0, 0, "Felique International", "Tokyo", "820/909/U00054820909", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054820909_002L.JPG", "", 0], ["AU7380715552", "LAMBO", "Urus Performante", 2025, "", "2028/06", 10000, "Black", "", 4000, "8AT", 43800000, 43970000, "MID Prime", "Hokkaido", "373/470/U00054373470", "1.1,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054373470_001L.JPG", "", 0], ["AU7195573342", "LAMBO", "Urus Performante", 2024, "", "2027/07", 2000, "Grey", "", 4000, "8AT", 44640000, 44800000, "YMC Yoshida", "Aichi", "592/639/U00053592639", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00053592639_001L.JPG", "", 0], ["AU7505897266", "LAMBO", "Urus Performante", 2025, "", "2028/02", 6000, "Grigio Hati", "", 4000, "8AT", 38500000, 38830000, "Atom automobile", "Aichi", "730/672/U00054730672", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054730672_003L.JPG", "", 0], ["AU7350298276", "LAMBO", "Urus SE", 2025, "", "2028/08", 540, "Grey", "", 4000, "8AT", 42800000, 43000000, "Lamborghini Shiba", "Tokyo", "226/657/U00054226657", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.2,9.2,10.2,11.2,12.2", "U00054226657_001L.JPG", "", 0], ["AU7446533538", "LAMBO", "Urus S", 2023, "", "2028/09", 8000, "Nero Helene", "", 4000, "8AT", 37000000, 37278000, "TR Garage", "Gunma", "602/943/U00054602943", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054602943_001L.JPG", "", 0], ["AU6615438539", "LAMBO", "Urus Performante", 2023, "", "2026/12", 17000, "White", "", 4000, "8AT", 38500000, 38665000, "Rosso Auto Sport", "Aichi", "592/487/U00050592487", "1.6,2.5,3.6,4.4,5.5,6.4,7.5,8.5,9.5,10.5,11.5,12.5", "U00050592487_001L.JPG", "", 0], ["AU7137322180", "LAMBO", "Urus SE", 2026, "", "2029/01", 1000, "Black", "", 4000, "8AT", 44000000, 44190000, "bond cars OSAKA", "Osaka", "345/847/U00053345847", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00053345847_001L.JPG", "", 0], ["AU6784530646", "LAMBO", "Urus SE", 2025, "", "2028/10", 2000, "Verde Turbine Lucido", "", 4000, "8AT", 44800000, 45000000, "Lamborghini Hiroshima", "Hiroshima", "547/632/U00051547632", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00051547632_001L.JPG", "", 0], ["AU6977548006", "LAMBO", "Urus SE", 2025, "", "2028/09", 2000, "Nero Helene", "", 4000, "8AT", 42800000, 43000000, "Lamborghini Hiroshima", "Hiroshima", "630/840/U00052630840", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00052630840_001L.JPG", "", 0], ["AU6164386996", "LAMBO", "Huracán Sterrato", 2024, "", "2027/08", 1000, "Grigio Acheso", "", 5200, "7AT", 37390000, 37491000, "Car Wing Fukuoka", "Fukuoka", "779/595/U00047779595", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00047779595_001L.JPG", "", 0], ["AU7267705722", "LAMBO", "Urus Performante", 2023, "", "", 4000, "Nero Helene", "", 4000, "8AT", 41800000, 42100000, "Lamborghini Hiroshima", "Hiroshima", "865/686/U00053865686", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00053865686_001L.JPG", "", 0], ["AU7172779957", "LAMBO", "Urus Performante", 2024, "", "2027/06", 8000, "Light Green", "", 4000, "8AT", 43980000, 44280000, "U-POS Fukushige", "Fukuoka", "462/961/U00053462961", "1.2,2.2,3.3,4.3,5.3,6.4,7.4,8.3,9.3,10.3,11.3,12.3", "U00053462961_005L.JPG", "", 0], ["AU6715787343", "LAMBO", "Urus SE", 2025, "", "2028/08", 4000, "Grey", "", 4000, "8AT", 39300000, 39600000, "Yumeshin Automobili", "Hyogo", "237/632/U00051237632", "1.1,2.1,3.1,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00051237632_001L.JPG", "", 0], ["AU6387275737", "LAMBO", "Urus Performante", 2023, "", "2026/12", 3000, "Bianco Comes", "", 4000, "8AT", 49650000, 49775000, "Miyake Corporation", "Wakayama", "250/901/U00049250901", "1.2,2.1,3.2,4.2,5.2,6.1,7.1,8.2,9.2,10.2,11.2,12.1", "U00049250901_002L.JPG", "", 0], ["AU7397742016", "LAMBO", "Urus SE", 2026, "", "2029/03", 700, "Black", "", 4000, "8AT", 0, 0, "RIZE", "Tochigi", "310/766/U00054310766", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054310766_001L.JPG", "", 0], ["AU6772194857", "LAMBO", "Urus S", 2025, "", "2028/03", 1000, "White", "", 4000, "8AT", 42000000, 42200000, "Styling★Garage", "Fukuoka", "477/050/U00051477050", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00051477050_002L.JPG", "", 0], ["AU7052612595", "LAMBO", "Huracán Sterrato", 2024, "", "2027/11", 107, "Black", "", 5200, "7AT", 38000000, 38260000, "LUSSO", "Osaka", "885/826/U00052885826", "1.1,2.1,3.1,4.1,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00052885826_001L.JPG", "", 0], ["AU7519108305", "ROLLSROYCE", "Black Badge Ghost", 2023, "", "2028/08", 29000, "Arctic White", "", 6750, "8AT", 38500000, 38800000, "Rolls-Royce Motor Cars Tokyo", "Tokyo", "857/206/UZ0054857206", "", "UZ0054857206_001L.JPG", "", 1], ["AU6850744614", "ROLLSROYCE", "Spectre", 2024, "", "2027/06", 15000, "Dark Green", "", 0, "EV", 51200000, 51300000, "Auto Links", "Saitama", "890/858/U00051890858", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00051890858_001L.JPG", "", 0], ["AU7441678742", "ROLLSROYCE", "Black Badge Cullinan", 2025, "", "2028/10", 4000, "Black Diamond", "", 6800, "8AT", 72800000, 73250000, "Rolls-Royce Motor Cars Yokohama", "Kanagawa", "578/076/U00054578076", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054578076_001L.JPG", "", 0], ["AU7357991131", "ROLLSROYCE", "Cullinan Series II", 2026, "", "2029/06", 50, "Black Diamond", "", 6800, "8AT", 68500000, 68800000, "Rolls-Royce Motor Cars Tokyo", "Tokyo", "250/650/UZ0054250650", "", "UZ0054250650_001L.JPG", "", 1], ["AU7507344974", "ROLLSROYCE", "Black Badge Cullinan", 2025, "", "2028/01", 6000, "Pearl", "", 6800, "8AT", 0, 0, "SS Corporation", "Aichi", "815/904/U00054815904", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054815904_001L.JPG", "", 0], ["AU7320798423", "ROLLSROYCE", "Black Badge Cullinan", 2025, "", "2028/11", 87, "Tempest Grey", "", 6800, "8AT", 0, 0, "bond cars OSAKA", "Osaka", "092/444/U00054092444", "1.1,2.1,3.1,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00054092444_001L.JPG", "", 0], ["AU7308412730", "ROLLSROYCE", "Cullinan", 2025, "", "2028/12", 95, "Black", "", 6800, "8AT", 69500000, 69800000, "FREE STYLES", "Kyoto", "046/932/U00054046932", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054046932_001L.JPG", "", 0], ["AU7302091893", "ROLLSROYCE", "Ghost", 2023, "", "", 6000, "Black", "", 6750, "8AT", 0, 0, "Uchikawa Motors", "Saga", "871/845/U00053871845", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00053871845_001L.JPG", "", 0], ["AU6710560181", "ROLLSROYCE", "Ghost", 2024, "", "2027/10", 100, "Dark Green", "", 6750, "8AT", 50000000, 50400000, "MAST", "Hyogo", "189/148/U00051189148", "1.2,2.2,3.2,4.2,5.2,6.2,7.2,8.2,9.2,10.2,11.2,12.2", "U00051189148_002L.JPG", "", 0], ["AU7524908085", "ROLLSROYCE", "Black Badge Cullinan", 2025, "", "2028/06", 2000, "Green", "", 6800, "8AT", 71400000, 71600000, "INSPIRATION", "Kanagawa", "871/870/U00054871870", "1.1,2.1,3.1,4.1,5.1,6.1,7.1,8.1,9.1,10.1,11.1,12.1", "U00054871870_001L.JPG", "", 0]];
+const BRANDS = {FERRARI:"Ferrari", LAMBO:"Lamborghini", ROLLSROYCE:"Rolls-Royce"};
+const STORES = {
+  OSF:{en:"Cornes Ferrari Osaka (Pre-owned)", zh:"Cornes 法拉利 大阪二手车展厅"},
+  SHF:{en:"Cornes Ferrari Shiba, Tokyo", zh:"Cornes 法拉利 东京芝展厅"},
+  LSH:{en:"Lamborghini Shiba, Tokyo", zh:"兰博基尼 东京芝展厅"},
+  RRT:{en:"Rolls-Royce Motor Cars Tokyo", zh:"劳斯莱斯 东京"},
+  RRO:{en:"Rolls-Royce Motor Cars Osaka", zh:"劳斯莱斯 大阪"}
+};
+function family(b,m){
+  const s=m.toLowerCase();
+  if(s.includes("296 gtb")) return "296 GTB";
+  if(s.includes("296")) return "296 GTS";
+  if(s.includes("cilindri")) return "12Cilindri";
+  if(s.includes("roma spider")) return "Roma Spider";
+  if(s.includes("roma")) return "Roma";
+  if(s.includes("portofino")) return "Portofino M";
+  if(s.includes("f8")) return "F8 Tributo";
+  if(s.includes("purosangue")) return "Purosangue";
+  if(s.includes("urus")) return "Urus";
+  if(s.includes("hurac")) return "Huracán";
+  if(s.includes("cullinan")) return "Cullinan";
+  if(s.includes("spectre")) return "Spectre";
+  if(s.includes("ghost")) return "Ghost";
+  return m;
+}
+const CORNES = RAW.map(r=>{
+  const [id,brand,mraw,incl,total,km,reg,insp,ext,int,store,cc,tm,folder,imgs]=r;
+  const [model,tag]=mraw.split("|");
+  return {id,src:"cornes",brand,model,curated:tag==="CS",incl,total,km,
+    year:+reg.slice(0,4), reg:reg.replace("-","/"), regFromInsp:false,
+    insp,ext,int,store:STORES[store],cc,tm,
+    imgs:imgs.map(f=>IMG+folder+"/"+f),
+    url:"https://www.cornesmotors.com/usedcar"+(brand==="FERRARI"?"/ferrari":"")+"?sfid="+id};
+});
+const PREF_ZH={Tokyo:"东京",Osaka:"大阪",Kyoto:"京都",Kanagawa:"神奈川",Hyogo:"兵库",Aichi:"爱知",Ishikawa:"石川",Shizuoka:"静冈",Nagano:"长野",Chiba:"千叶",Gifu:"岐阜",Saitama:"埼玉",Hiroshima:"广岛",Fukuoka:"福冈",Hokkaido:"北海道",Shiga:"滋贺",Ehime:"爱媛",Gunma:"群马",Tochigi:"栃木",Wakayama:"和歌山",Saga:"佐贺"};
+const CSENSOR = CS_RAW.map(r=>{
+  const [id,brand,model,year,regm,insp,km,ext,int,cc,tm,incl,total,shop,pref,folder,ml,main,L,flag]=r;
+  const U=folder.split("/").pop();
+  const imgs=["https://ccsrpcma.carsensor.net/CSphoto/bkkn/"+folder+"/"+main]
+    .concat(ml?ml.split(",").map(x=>"https://ccsrpcml.carsensor.net/CSphoto/ml/"+folder+"/"+U+"_"+x.replace(/\.(\d)$/,"_00$1")+".jpg"):[]);
+  let reg=String(year), regFromInsp=false;
+  if(regm) reg=regm.replace("-","/");
+  else if(insp){ reg=year+"/"+insp.split("/")[1]; regFromInsp=true; }
+  return {id,src:"carsensor",brand,model,curated:false,incl,total,km,year,reg,regFromInsp,
+    insp:insp||"",ext,int,store:{en:shop+" · "+pref, zh:shop+" · "+(PREF_ZH[pref]||pref)},cc,tm,flag:!!flag,
+    imgs,url:"https://www.carsensor.net/usedcar/detail/"+id+"/index.html"};
+});
+const CARS = CORNES.concat(CSENSOR).map(c=>({...c, family:family(c.brand,c.model), excl:c.incl?Math.round(c.incl/1.1):0, pick:PICKS[c.id]||null}));
+
+/* i18n */
+const TAGS=["top","value","fair","lowkm","new","cornes","rare"];
+const T={
+ en:{eyebrow:"Cornes Motors × Carsensor · RHD · 2022+",
+   h1:"Right-hand drive, <em>warmly</em> curated.",
+   lede:"Every right-hand-drive Ferrari, Lamborghini and Rolls-Royce first registered in 2022 or later, from Cornes Motors and dealers across Japan on Carsensor. Duplicates removed.",
+   picks:"Selection",allCars:"All cars",picksOnly:"WARMGLOW Picks",pickBadge:"Pick",allBrands:"All brands",allSub:"Ferrari · Lamborghini · Rolls-Royce",
+   tag_top:"Top pick in model",tag_value:"Great value",tag_fair:"Fair price",tag_lowkm:"Low mileage",tag_new:"Nearly new",tag_cornes:"Cornes certified",tag_rare:"Rare find",
+   why:c=>{const p=c.pick, base=`${c.year} · ${c.km.toLocaleString("en-US")} km`; if(p.r==null) return `One of very few right-hand-drive ${c.model} listings in Japan (${base}), so there aren't enough comparable cars to benchmark the price.`; const d=Math.round(Math.abs(p.r)*100); return `${p.r<0?`About ${d}% below`:d===0?"In line with":`About ${d}% above`} the expected price for this model at this age and mileage (${base}), benchmarked against ${p.n} comparable RHD listings in Japan.${c.src==="cornes"?" Sold by Cornes with an approved-used warranty.":""}`;},
+   brand:"Brand",model:"Model",source:"Source",poa:"Price on request",poaNote:"Ask the dealer for a price",na:"Not listed",fromInsp:"(month from inspection)",flag:"· Cornes site says LHD — please confirm",srcCs:"View original listing on Carsensor →",all:"All",cars:"cars",shown:n=>`${n} car${n===1?"":"s"} shown`,
+   sNew:"Newest registration",sLow:"Price: low → high",sHigh:"Price: high → low",sKm:"Lowest mileage",
+   preTax:"Price excl. tax (JPY)",postTax:"Price incl. 10% tax (JPY)",totalPay:"Total payment incl. fees (JPY)",myr:"Price excl. tax (MYR)",
+   km:"Mileage",reg:"First registration",ext:"Exterior colour",int:"Interior colour",insp:"Inspection (shaken) until",
+   eng:"Engine",tm:"Transmission",store:"Showroom",drive:"Steering",rhd:"Right-hand drive",
+   from:"from",back:"← Back to gallery",ofPhotos:(a,b)=>`${a} / ${b}`,
+   inspInc:"Inspection done at sale",src:"View original listing on Cornes →",curated:"Curated Selezione",
+   ev:"Electric",at8:"8-speed auto",at7:"7-speed dual-clutch",
+   note:r=>`Japanese listings show prices including 10% consumption tax. "Excl. tax" = listed price ÷ 1.1, which is what an export buyer would usually pay. MYR uses 1 JPY = ${r} MYR (mid-market, approx.); change the rate in the filter bar.`,
+   foot:"Data from cornesmotors.com/usedcar, /usedcar/ferrari and carsensor.net (filters: 2022 or later, right-hand drive), collected 20 Nov 2026. Cars Cornes lists on both sites appear once, matched by chassis-number suffix; Carsensor doesn't give the registration month, so the inspection month is used. Photos load straight from the Cornes and Carsensor image servers. Prices and availability change, so check with the showroom before you act on anything here. This is an unofficial showcase and isn't affiliated with Cornes, Carsensor, Ferrari, Lamborghini or Rolls-Royce."},
+ zh:{eyebrow:"Cornes Motors × Carsensor · 右舵 · 2022年起",
+   h1:"右舵臻选，<em>温暖</em>呈现。",
+   lede:"汇总 Cornes Motors 与 Carsensor 全日本经销商在售的法拉利、兰博基尼、劳斯莱斯：2022 年及以后首次登记、右舵，已去重。",
+   picks:"精选",allCars:"全部车辆",picksOnly:"WARMGLOW 精选",pickBadge:"精选",allBrands:"全部品牌",allSub:"法拉利 · 兰博基尼 · 劳斯莱斯",
+   tag_top:"同车型首选",tag_value:"超值",tag_fair:"价格合理",tag_lowkm:"低里程",tag_new:"准新车",tag_cornes:"Cornes 认证",tag_rare:"稀有",
+   why:c=>{const p=c.pick, base=`${c.year}年 · ${c.km.toLocaleString("en-US")} km`; if(p.r==null) return `日本在售的右舵 ${c.model} 极少（${base}），没有足够的同款车来对比价格。`; const d=Math.round(Math.abs(p.r)*100); return `${p.r<0?`比同年份、同里程的预期价格低约 ${d}%`:d===0?"与同年份、同里程的预期价格持平":`比同年份、同里程的预期价格高约 ${d}%`}（${base}），对比基准为日本 ${p.n} 台同款右舵在售车。${c.src==="cornes"?"由 Cornes 销售，附认证二手车保证。":""}`;},
+   brand:"品牌",model:"车型",source:"来源",poa:"价格面议",poaNote:"请向经销商询价",na:"未标注",fromInsp:"（月份取自车检）",flag:"· Cornes 官网标注为左舵，请确认",srcCs:"查看 Carsensor 原始页面 →",all:"全部",cars:"辆",shown:n=>`共 ${n} 辆`,
+   sNew:"登记日期最新",sLow:"价格从低到高",sHigh:"价格从高到低",sKm:"里程最少",
+   preTax:"税前价格 (JPY)",postTax:"含税价格 (含10%消费税, JPY)",totalPay:"支付总额 (含手续费, JPY)",myr:"税前价格 (MYR)",
+   km:"里程",reg:"首次登记",ext:"外观颜色",int:"内饰颜色",insp:"车检有效期至",
+   eng:"排量",tm:"变速箱",store:"展厅",drive:"方向盘",rhd:"右舵",
+   from:"起",back:"← 返回列表",ofPhotos:(a,b)=>`${a} / ${b}`,
+   inspInc:"售出时做车检",src:"查看 Cornes 原始页面 →",curated:"Curated Selezione",
+   ev:"纯电动",at8:"8速自动",at7:"7速双离合",
+   note:r=>`日本标价均含10%消费税。"税前" = 标价 ÷ 1.1（出口买家通常按此价格支付）。马币按 1 JPY = ${r} MYR（中间价，约数）换算，可在筛选栏中修改汇率。`,
+   foot:"数据来自 cornesmotors.com/usedcar、/usedcar/ferrari 与 carsensor.net（筛选：2022年起、右舵），采集于 2026年11月20日。精选方法：在每个车型内用年份与里程拟合税前价格，每个车型按数量分配名额，优先选价格低于预期最多的车，低里程、较新车与 Cornes 保证车略有加分。两站重复的 Cornes 车辆按车架号末三位去重，只保留一条；Carsensor 未提供登记月份，以车检月份代替。图片直接从 Cornes 与 Carsensor 的图片服务器加载。价格与库存会变动，请以展厅确认为准。本页为非官方展示，与 Cornes、Carsensor、法拉利、兰博基尼、劳斯莱斯无关联。"}
+};
+let lang="en", brandF="ALL", modelF="ALL", srcF="ALL", pickF="ALL", sortF="new", RATE=0.0258;
+try{const s=localStorage.getItem("gg_rate"); if(s) RATE=+s;}catch(e){}
+
+const $=s=>document.querySelector(s);
+const yen=n=>"¥"+n.toLocaleString("en-US");
+const rm=n=>"RM "+Math.round(n).toLocaleString("en-US");
+const t=k=>T[lang][k];
+const regFmt=r=>r.replace("-","/");
+const tmFmt=c=>c.tm==="EV"?t("ev"):c.tm==="7AT"?t("at7"):t("at8");
+const inspFmt=c=>c.insp==="車検整備付"?t("inspInc"):c.insp;
+
+function applyLang(){
+  document.documentElement.lang=lang==="zh"?"zh-CN":"en";
+  document.querySelectorAll("[data-t]").forEach(el=>{const v=t(el.dataset.t); if(typeof v==="string") el.innerHTML=v;});
+  document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
+  $("#sort").innerHTML=[["new","sNew"],["low","sLow"],["high","sHigh"],["km","sKm"]].map(([v,k])=>`<option value="${v}" ${v===sortF?"selected":""}>${t(k)}</option>`).join("");
+  renderFilters(); renderGrid();
+  if($("#detail").classList.contains("open")) openDetail(cur.id, idx);
+}
+function renderFilters(){
+  const br=$("#brandRow"); br.innerHTML="";
+  ["ALL","FERRARI","LAMBO","ROLLSROYCE"].forEach(k=>{
+    const m=BRAND_META[k], n=k==="ALL"?CARS.length:CARS.filter(c=>c.brand===k).length;
+    const logo=k!=="ALL"&&BRAND_LOGOS[k];
+    const b=document.createElement("button"); b.className="btile"+(brandF===k?" on":""); b.style.setProperty("--tint",m.tint);
+    b.innerHTML=`<span class="emblem">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="bc">${n}</span><span><div class="bn">${k==="ALL"?t("allBrands"):BRANDS[k]}</div><div class="bo">${k==="ALL"?t("allSub"):m.o}</div></span>`;
+    b.onclick=()=>{brandF=k; modelF="ALL"; renderFilters(); renderGrid();}; br.appendChild(b);
+  });
+  const pr=$("#pickRow"); pr.querySelectorAll(".pill").forEach(e=>e.remove());
+  const np=CARS.filter(c=>c.pick).length;
+  [["ALL",t("allCars")],["PICK","★ "+t("picksOnly")+" · "+np],...TAGS.map(k=>[k,t("tag_"+k)])].forEach(([k,v])=>{
+    const b=document.createElement("button"); b.className="pill"+(k!=="ALL"?" star":"")+(pickF===k?" on":""); b.textContent=v;
+    b.onclick=()=>{pickF=k; renderFilters(); renderGrid();}; pr.appendChild(b);
+  });
+  const mr=$("#modelRow"); mr.querySelectorAll(".pill").forEach(e=>e.remove());
+  const fams=[...new Set(CARS.filter(c=>brandF==="ALL"||c.brand===brandF).map(c=>c.family))].sort();
+  [["ALL",t("all")],...fams.map(f=>[f,f])].forEach(([k,v])=>{
+    const n=k==="ALL"?null:CARS.filter(c=>c.family===k&&(brandF==="ALL"||c.brand===brandF)).length;
+    const b=document.createElement("button"); b.className="pill"+(modelF===k?" on":""); b.textContent=v+(n?` · ${n}`:"");
+    b.onclick=()=>{modelF=k; renderFilters(); renderGrid();}; mr.appendChild(b);
+  });
+  const sr=$("#srcRow"); sr.querySelectorAll(".pill").forEach(e=>e.remove());
+  [["ALL",t("all")],["cornes","Cornes Motors"],["carsensor","Carsensor"]].forEach(([k,v])=>{
+    const b=document.createElement("button"); b.className="pill"+(srcF===k?" on":""); b.textContent=v;
+    b.onclick=()=>{srcF=k; renderFilters(); renderGrid();}; sr.appendChild(b);
+  });
+}
+function list(){
+  let l=CARS.filter(c=>(brandF==="ALL"||c.brand===brandF)&&(modelF==="ALL"||c.family===modelF)&&(srcF==="ALL"||c.src===srcF)&&(pickF==="ALL"||(c.pick&&(pickF==="PICK"||c.pick.t.includes(pickF)))));
+  const P=c=>c.incl||(sortF==="low"?1e12:-1); const s={new:(a,b)=>b.reg.localeCompare(a.reg),low:(a,b)=>P(a)-P(b),high:(a,b)=>P(b)-P(a),km:(a,b)=>a.km-b.km}[sortF];
+  return l.sort(s);
+}
+function renderGrid(){
+  const l=list(); $("#count").textContent=t("shown")(l.length);
+  $("#grid").innerHTML=l.length?l.map((c,i)=>`
+   <article class="card" style="animation-delay:${Math.min(i,12)*45}ms" data-id="${c.id}">
+     <div class="thumb">
+       <span class="badge">${c.reg}</span><span class="badge r">${c.src==="cornes"?"Cornes":"Carsensor"}</span>${c.pick?`<span class="badge pk">★ ${t("pickBadge")}</span>`:""}
+       <img loading="lazy" src="${c.imgs[0]}" alt="${BRANDS[c.brand]} ${c.model}" onerror="this.style.opacity=0">
+     </div>
+     <div class="cbody">
+       <div class="brand">${BRANDS[c.brand]}</div>
+       <div class="cname">${c.model}</div>${c.pick?`<div class="tags">${c.pick.t.map(x=>`<span class="tag ${x}">${t("tag_"+x)}</span>`).join("")}</div>`:""}
+       <div class="meta"><span>${c.km.toLocaleString("en-US")} km</span>${c.ext?`<span>${c.ext}</span>`:""}<span>${c.store[lang].split(" · ").pop()}</span></div>
+       <div class="price">
+         <div><small>${t("preTax")}</small><div class="jp">${c.excl?yen(c.excl):t("poa")}</div></div>
+         <div class="my"><small>MYR</small>${c.excl?rm(c.excl*RATE):"—"}</div>
+       </div>
+     </div>
+   </article>`).join(""):`<div class="empty">—</div>`;
+  document.querySelectorAll(".card").forEach(el=>el.onclick=()=>openDetail(el.dataset.id,0));
+}
+
+/* Detail */
+let cur=null, idx=0;
+function openDetail(id,i){
+  cur=CARS.find(c=>c.id===id); if(!cur) return; idx=i||0;
+  const c=cur;
+  $("#info").innerHTML=`
+    <div class="brand">${BRANDS[c.brand]} · ${c.src==="cornes"?"Cornes Motors":"Carsensor"}${c.curated?" · "+t("curated"):""}</div>
+    <h2>${c.model}</h2>
+    ${c.pick?`<div class="pickbox"><b>★ ${t("pickBadge").toUpperCase()}</b> · ${c.pick.t.map(x=>t("tag_"+x)).join(" · ")}<br>${t("why")(c)}</div>`:""}
+    <div class="pbox">
+      ${c.incl?`<div class="prow big"><span>${t("preTax")}</span><b>${yen(c.excl)}</b></div>
+      <div class="prow myr"><span>${t("myr")}</span><b>${rm(c.excl*RATE)}</b></div>
+      <div class="prow"><span>${t("postTax")}</span><b>${yen(c.incl)}</b></div>
+      <div class="prow"><span>${t("totalPay")}</span><b>${c.total?yen(c.total):"—"}</b></div>`:`<div class="prow big"><span>${t("preTax")}</span><b>${t("poa")}</b></div><div class="prow"><span>${t("poaNote")}</span><b></b></div>`}
+    </div>
+    <div class="specs">
+      <div class="spec"><span>${t("km")}</span><b>${c.km.toLocaleString("en-US")} km</b></div>
+      <div class="spec"><span>${t("reg")}</span><b>${c.reg}${c.regFromInsp?` <small style="color:var(--dim);font-weight:400">${t("fromInsp")}</small>`:""}</b></div>
+      <div class="spec"><span>${t("ext")}</span><b>${c.ext||t("na")}</b></div>
+      <div class="spec"><span>${t("int")}</span><b>${c.int||t("na")}</b></div>
+      <div class="spec"><span>${t("drive")}</span><b>${t("rhd")}${c.flag?` <small style="color:var(--glow2);font-weight:400">${t("flag")}</small>`:""}</b></div>
+      <div class="spec"><span>${t("insp")}</span><b>${c.insp?inspFmt(c):t("inspInc")}</b></div>
+      <div class="spec"><span>${t("eng")}</span><b>${c.cc?c.cc.toLocaleString("en-US")+" cc":t("ev")}</b></div>
+      <div class="spec"><span>${t("tm")}</span><b>${tmFmt(c)}</b></div>
+      <div class="spec" style="grid-column:1/-1"><span>${t("store")}</span><b>${c.store[lang]}</b></div>
+    </div>
+    <p class="note">${t("note")(RATE)}</p>
+    <a class="src" href="${c.url}" target="_blank" rel="noopener">${c.src==="cornes"?t("src"):t("srcCs")}</a>`;
+  $("#strip").innerHTML=c.imgs.map((u,k)=>`<img loading="lazy" src="${u}" data-k="${k}" alt="" onerror="this.remove()">`).join("");
+  $("#strip").querySelectorAll("img").forEach(im=>im.onclick=()=>show(+im.dataset.k));
+  const l=list(); const p=l.findIndex(x=>x.id===id);
+  $("#dcount").textContent=p>=0?`${p+1} / ${l.length}`:"";
+  show(idx);
+  $("#detail").classList.add("open"); document.body.style.overflow="hidden";
+  if(location.hash!=="#"+id) history.replaceState(null,"","#"+id);
+}
+function show(k){
+  idx=(k+cur.imgs.length)%cur.imgs.length;
+  $("#dimg").src=cur.imgs[idx];
+  $("#dctr").textContent=t("ofPhotos")(idx+1,cur.imgs.length);
+  $("#strip").querySelectorAll("img").forEach((im,j)=>im.classList.toggle("on",j===idx));
+  const st=$("#strip"), on=st.querySelector("img.on"); if(on) st.scrollTo({left:on.offsetLeft-st.clientWidth/2+on.clientWidth/2,behavior:"smooth"});
+}
+function closeDetail(){ $("#detail").classList.remove("open"); document.body.style.overflow=""; history.replaceState(null,"",location.pathname+location.search); }
+$("#prev").onclick=()=>show(idx-1); $("#next").onclick=()=>show(idx+1);
+$("#back").onclick=closeDetail;
+$("#detail").addEventListener("click",e=>{if(e.target.id==="detail") closeDetail();});
+document.addEventListener("keydown",e=>{
+  if(!$("#detail").classList.contains("open")) return;
+  if(e.key==="Escape") closeDetail(); if(e.key==="ArrowLeft") show(idx-1); if(e.key==="ArrowRight") show(idx+1);
+});
+$("#sort").onchange=e=>{sortF=e.target.value; renderGrid();};
+$("#rate").value=RATE;
+$("#rate").oninput=e=>{const v=parseFloat(e.target.value); if(v>0){RATE=v; try{localStorage.setItem("gg_rate",v)}catch(_){} renderGrid(); if($("#detail").classList.contains("open")) openDetail(cur.id,idx);}};
+document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang; applyLang();});
+window.addEventListener("hashchange",()=>{const h=location.hash.slice(1); if(h&&CARS.some(c=>c.id===h)) openDetail(h,0); else if($("#detail").classList.contains("open")) closeDetail();});
+
+applyLang();
+const h=location.hash.slice(1); if(h&&CARS.some(c=>c.id===h)) openDetail(h,0);
+</script>
+</body>
+</html>
