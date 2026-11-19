@@ -125,18 +125,27 @@ input.rate{width:92px;text-align:center}
 .detail{position:fixed;inset:calc(68px + env(safe-area-inset-top)) 0 0 0;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;z-index:50;background:rgba(10,6,4,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:none;overflow-y:auto}
 .detail.open{display:block;animation:fade .35s}
 @keyframes fade{from{opacity:0}}
-.dpanel{max-width:1240px;margin:28px auto;padding:0 max(24px,env(safe-area-inset-right)) calc(60px + env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left))}
-@media(min-width:961px){.dlayout>div:first-child{position:sticky;top:20px;align-self:start}}
+.dpanel{padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+.gal .strip{max-width:1320px;margin:0 auto;padding:14px max(24px,env(safe-area-inset-right)) 6px max(24px,env(safe-area-inset-left));justify-content:safe center}
+.infowrap{max-width:1320px;margin:18px auto 0;padding:0 max(24px,env(safe-area-inset-right)) 0 max(24px,env(safe-area-inset-left))}
+@media(min-width:900px){
+  .info{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:44px;align-items:start}
+  .info>*{grid-column:1}
+  .info>.specs{grid-column:2;grid-row:1 / span 8}
+}
+.stagebg{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(36px) brightness(.45) saturate(1.2);transform:scale(1.1)}
 .stage img{cursor:zoom-in;-webkit-user-drag:none;user-select:none}
-.dtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.dlayout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:28px}.dlayout>*{min-width:0}
-@media(max-width:960px){.dlayout{grid-template-columns:1fr}}
-.stage{position:relative;border-radius:var(--radius);overflow:hidden;background:#1a120c;border:1px solid var(--line);aspect-ratio:16/10.5;box-shadow:0 40px 120px -40px rgba(255,110,40,.5)}
-.stage img{width:100%;height:100%;object-fit:cover;display:block}
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(15,10,7,.55);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(8px)}
+.dtop{position:absolute;top:16px;left:max(20px,env(safe-area-inset-left));right:max(20px,env(safe-area-inset-right));display:flex;justify-content:space-between;align-items:center;z-index:3;pointer-events:none}.dtop>*{pointer-events:auto}
+.dtop .pill{background:rgba(15,10,7,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.dtop .count{padding:6px 12px;border-radius:999px;background:rgba(15,10,7,.55);color:var(--text)}
+.dlayout{display:block}
+.stage{position:relative;width:100%;overflow:hidden;background:#120c08;aspect-ratio:16/10;border-bottom:1px solid var(--line)}
+@media (orientation:portrait){.stage{aspect-ratio:4/3}}
+.stage img{position:relative;width:100%;height:100%;object-fit:cover;display:block;z-index:1}
+.nav-btn{z-index:2;position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(15,10,7,.55);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(8px)}
 .nav-btn:hover{background:rgba(255,122,47,.6)}
-.nav-btn.p{left:14px}.nav-btn.n{right:14px}
-.counter{position:absolute;bottom:14px;right:16px;font-size:12px;padding:5px 10px;border-radius:999px;background:rgba(15,10,7,.6)}
+.nav-btn.p{left:max(14px,env(safe-area-inset-left))}.nav-btn.n{right:max(14px,env(safe-area-inset-right))}
+.counter{z-index:2;position:absolute;bottom:14px;right:16px;font-size:12px;padding:5px 10px;border-radius:999px;background:rgba(15,10,7,.6)}
 .strip{position:relative;display:flex;gap:10px;overflow-x:auto;padding:14px 2px 6px;scrollbar-width:thin}
 .strip img{width:104px;height:68px;object-fit:cover;border-radius:12px;opacity:.5;cursor:pointer;border:1px solid transparent;flex:none;transition:.25s}
 .strip img.on,.strip img:hover{opacity:1;border-color:var(--glow2)}
@@ -163,7 +172,7 @@ input.rate{width:92px;text-align:center}
 .lb .x{position:absolute;top:calc(14px + env(safe-area-inset-top));right:calc(14px + env(safe-area-inset-right));width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(15,10,7,.6);color:#fff;font-size:26px;cursor:pointer}
 .lb .nav-btn{width:56px;height:56px}
 .lb .counter{bottom:calc(18px + env(safe-area-inset-bottom));right:auto;left:50%;transform:translateX(-50%)}
-.hint{position:absolute;left:16px;bottom:14px;font-size:12px;padding:5px 10px;border-radius:999px;background:rgba(15,10,7,.6);color:var(--muted)}
+.hint{z-index:2;position:absolute;left:16px;bottom:14px;font-size:12px;padding:5px 10px;border-radius:999px;background:rgba(15,10,7,.6);color:var(--muted)}
 /* Touch devices */
 @media (hover:none){
   .card:hover,.btile:hover{transform:none}
@@ -228,21 +237,22 @@ footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--dim);fon
 <main class="wrap"><div class="grid" id="grid"></div></main>
 
 <div class="detail" id="detail"><div class="dpanel">
-  <div class="dtop">
-    <button class="pill" id="back" data-t="back"></button>
-    <span class="count" id="dcount"></span>
-  </div>
   <div class="dlayout">
-    <div>
+    <div class="gal">
       <div class="stage">
+        <div class="stagebg" id="dbg"></div>
         <img id="dimg" alt="">
+        <div class="dtop">
+          <button class="pill" id="back" data-t="back"></button>
+          <span class="count" id="dcount"></span>
+        </div>
         <button class="nav-btn p" id="prev" aria-label="Previous photo">‹</button>
         <button class="nav-btn n" id="next" aria-label="Next photo">›</button>
         <span class="counter" id="dctr"></span><span class="hint" id="hint"></span>
       </div>
       <div class="strip" id="strip"></div>
     </div>
-    <div class="info" id="info"></div>
+    <div class="infowrap"><div class="info" id="info"></div></div>
   </div>
 </div></div>
 
@@ -491,7 +501,7 @@ function openDetail(id,i){
 }
 function show(k){
   idx=(k+cur.imgs.length)%cur.imgs.length;
-  $("#dimg").src=cur.imgs[idx];
+  $("#dimg").src=cur.imgs[idx]; $("#dbg").style.backgroundImage=`url("${cur.imgs[idx]}")`;
   $("#dctr").textContent=t("ofPhotos")(idx+1,cur.imgs.length);
   $("#lbimg").src=cur.imgs[idx]; $("#lbc").textContent=t("ofPhotos")(idx+1,cur.imgs.length);
   $("#strip").querySelectorAll("img").forEach((im,j)=>im.classList.toggle("on",j===idx));
