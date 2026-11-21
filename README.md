@@ -60,7 +60,7 @@
 - 照片：左右滑动切换，点击全屏查看原图，键盘左右键 / Esc
 - 显示内容：
   - 车辆型号名称（含版本，如 911 Carrera 4 GTS Cabriolet）
-  - 车辆图片（每台最多约 14 张）
+  - 车辆图片（来源页面上的全部照片，含内饰；Carsensor 常见 30–50 张，Cornes 常见 40–55 张）
   - **税前日元价**（= 含税标价 ÷ 1.1，出口买家通常按此价支付）
   - **税前价换算马币**
   - **含税日元价**（日本标价含 10% 消费税）
@@ -101,7 +101,7 @@
 
 - Carsensor 没有内饰颜色字段，大多数 Carsensor 车辆显示「未标注」
 - Carsensor 只提供登记年份，月份由车检月份推算（新车首次车检为 3 年后）
-- 部分 Cornes 车在 Carsensor 上只有 1–3 张照片
+- 少数 Carsensor 车辆本身只上传了 1–3 张照片
 - 约 29 台价格面议
 - 车架号只有末三位，去重存在极小概率误判（如两台 2025 年 296 GTS 末三位同为 904，但颜色、价格不同，均保留）
 - 图片直接引用来源网站地址：在 Claude 应用的文件预览中不会显示，需在浏览器或线上地址打开；来源网站下架后图片会失效
@@ -111,19 +111,28 @@
 
 ## 5. 数据更新流程
 
-抓取需要在 Claude 桌面应用的内置浏览器（或 Chrome 插件）中执行，云端环境无法直接访问 Cornes / Carsensor。
+抓取需要在 Claude 桌面应用的内置浏览器（或 Chrome 插件）中执行，云端环境无法直接访问 Cornes / Carsensor。脚本在 `tools/scrape/`，粘贴到对应网站页面的控制台执行。
 
-1. **Carsensor**：按第 1 节的品牌代码获取搜索结果中所有车源编号，再逐个抓取详情页 `https://www.carsensor.net/usedcar/detail/{编号}/index.html`，解析：车名、车系、年式、走行距离、車検、色、ハンドル、車台末尾番号、ミッション、排気量、車両本体価格、支払総額、店铺、所在地、图片（`ccsrpcma…/bkkn/…L.JPG` 主图 + `ccsrpcml…/ml/…_N_00X.jpg`）
-2. **Cornes**：在 `/usedcar/`、`/usedcar/ferrari` 点击「さらに読み込む」加载全部车辆，从 React 状态读取车辆数组（含 `handlePosition`、`vinSuffix`、颜色、价格等），再逐台打开详情弹窗获取全部图片
-3. 将数据保存为 `cs_new.json`、`cornes1.json`、`cornes_fer.json`、`cornes_main_allh.json`（左右舵对照）、`prev_ids.json`（上一版车源编号）
-4. 运行 `tools/` 下脚本：
-   - `python3 build.py`：翻译（车型/版本、颜色、经销商、都道府县，见 `maps.py`、`shops.py`）、去重、标记新车源 → `data.json`
-   - `python3 picks.py`：计算精选 → `picks2.json`
-   - `python3 emit.py`：压缩输出 `data_block.js`
-5. 将 `data_block.js` 的内容替换到 `index.html` 中 `const PICKS = …` 与 `const DATA = …` 两行
-6. 修改页脚中的「最近更新」日期，推送到 `main` 分支，GitHub Pages 约 1–2 分钟后生效
+### 5.1 原则：每天增量、低频访问
+- 每次请求之间随机间隔 3–7 秒；遇到 HTTP 403 / 429 或验证码页面立即停止，不重试
+- 每天只读**列表页**（Carsensor 约 25–30 页 + Cornes 2 个页面），据此判断新上架 / 已售出 / 调价
+- 只对**新上架**的车打开详情页（通常每天 5–20 台）
+- 全量详情刷新（照片、价格校对）每周或每月一次即可，约 1 小时
+- 车源状态保存在 `data/cars.json`（每行一台车），是增量比对的基准，每次更新都要提交
 
----
+### 5.2 每日步骤
+1. **Carsensor**（在任意 carsensor.net 页面）：粘贴 `tools/scrape/carsensor.js`，运行 `await WG.csListAll()`，把 `WG.dumpList()` 保存为 `data/scrape/cs_list.json`
+2. **Cornes**（分别在 `/usedcar` 与 `/usedcar/ferrari`）：粘贴 `tools/scrape/cornes.js`，运行 `await WG.cornesLoadAll()`，把 `WG.cornesDump()` 保存为 `data/scrape/cornes_page_main.json` / `cornes_page_ferrari.json`
+3. `cd tools && python3 build.py todo` → 列出需要抓详情的新车
+4. 浏览器中：Carsensor `await WG.csDetails([...])` → `WG.dumpFull()` 保存为 `data/scrape/cs_detail.json`；Cornes `await WG.cornesGallery([...])` → `WG.dumpGal()` 保存为 `data/scrape/cornes_gal.json`
+5. `python3 build.py && python3 picks.py && python3 emit.py`
+   - `build.py`：合并、翻译、去重、标记新车源、删除已售 → `data/cars.json`、`data/data.json`
+   - `picks.py`：计算精选 → `data/picks.json`
+   - `emit.py`：写入 `index.html` 的 `PICKS` / `DATA` 两行，并更新页脚和本文件的「最近更新」日期
+6. 提交并推送到 `main`（`data/scrape/` 不提交），GitHub Pages 约 1–2 分钟后生效
+
+### 5.3 全量刷新（每周/每月）
+同上，但第 4 步对**所有**车执行：Carsensor `WG.csDetails(WG.list.map(x => x.id))`，分批用 `WG.dumpCompact(ids)` 导出（只含照片、车架号、方向盘、价格）；Cornes `WG.cornesGallery()`（不带参数 = 本页全部右舵车）。
 
 ## 6. 文件结构
 
@@ -132,12 +141,20 @@ index.html             网页（含样式、脚本、数据）
 apple-touch-icon.png   iPad「添加到主屏幕」图标
 .nojekyll              GitHub Pages 直接发布静态文件
 README.md              本文件
+data/
+  cars.json            当前车源状态（增量比对基准，每行一台）
+  data.json, picks.json 中间结果
+  scrape/              每次抓取的原始数据（不提交）
 tools/
-  build.py             合并、翻译、去重、标记新车源
+  scrape/carsensor.js  Carsensor 抓取脚本（列表页 / 详情页）
+  scrape/cornes.js     Cornes 抓取脚本（列表 / 全部照片）
+  build.py             增量合并、翻译、去重、标记新车源、删除已售；`build.py todo` 列出待抓详情
   maps.py              车型/版本解析、颜色与地名翻译
   shops.py             经销商名称英文对照
   picks.py             精选计算
-  emit.py              输出页面数据块
+  emit.py              写入 index.html 并更新日期
+  common.py            路径与读写工具
+  bootstrap.py         一次性：从 index.html 还原 data/cars.json
 ```
 
 ---

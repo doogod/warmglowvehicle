@@ -1,7 +1,8 @@
-import json,math,numpy as np
+import json,math,os,datetime,numpy as np
+from common import DATA
 from collections import defaultdict,Counter
-d=json.load(open('data.json'))
-NOWM=2026*12+11
+d=json.load(open(os.path.join(DATA,'data.json')))
+_t=datetime.date.today(); NOWM=_t.year*12+_t.month
 def age(r):
     p=r['reg'].split('/'); y=int(p[0]); m=int(p[1]) if len(p)>1 else 12
     return NOWM-(y*12+m)
@@ -41,7 +42,7 @@ for (b,f),arr in fams.items():
         if r['src']=='cornes': t.append('cornes')
         if len(arr)<=2: t.append('rare')
         picks[r['id']]={'r':None if (r['_res'] is None or r['_np']<3) else round(r['_res'],3),'n':r['_np'],'t':t}
-json.dump(picks,open('picks2.json','w'))
+json.dump(picks,open(os.path.join(DATA,'picks.json'),'w'))
 print(len(picks)); print(Counter(t for p in picks.values() for t in p['t']))
 print(Counter((r['brand']) for r in d if r['id'] in picks))
 for r in d:
