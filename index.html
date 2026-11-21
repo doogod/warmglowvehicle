@@ -63,12 +63,18 @@ h1 em{font-style:italic;background:linear-gradient(100deg,var(--glow2),var(--glo
 .brands{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:34px 0 8px}
 @media(max-width:680px){.brands{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:1000px){.btile .bn{font-size:12px;letter-spacing:.14em;white-space:nowrap}.btile{padding:18px 16px 16px}.btile .bo{font-size:11px}}
-.btile{position:relative;overflow:hidden;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.01));padding:22px 20px 18px;cursor:pointer;text-align:left;color:var(--text);font:inherit;display:flex;flex-direction:column;gap:14px;min-height:170px;transition:.35s}
+.btile{isolation:isolate;position:relative;overflow:hidden;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.01));padding:22px 20px 18px;cursor:pointer;text-align:left;color:var(--text);font:inherit;display:flex;flex-direction:column;gap:14px;min-height:170px;transition:.35s}
 .btile::after{content:"";position:absolute;width:220px;height:220px;right:-70px;bottom:-110px;border-radius:50%;background:radial-gradient(circle,var(--tint),transparent 70%);opacity:.18;transition:.45s}
 .btile:hover{border-color:rgba(248,183,101,.4);transform:translateY(-3px)}
 .btile:hover::after{opacity:.35}
 .btile.on{border-color:transparent;background:linear-gradient(160deg,rgba(243,140,71,.2),rgba(255,201,87,.05));box-shadow:0 0 0 1px rgba(255,201,87,.55) inset,0 24px 60px -30px rgba(243,140,71,.8)}
 .btile.on::after{opacity:.5}
+.btile .bphoto{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center 60%;opacity:.38;transition:opacity .45s,transform .9s cubic-bezier(.2,.8,.2,1);filter:saturate(1.1)}
+.btile::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(15,10,7,.35) 0%,rgba(15,10,7,.92) 78%)}
+.btile .wm{position:absolute;right:-8px;bottom:-26px;z-index:-1;font-family:"Instrument Serif",serif;font-size:150px;line-height:1;color:rgba(255,201,87,.09);letter-spacing:-.04em;pointer-events:none}
+.btile .wm img{height:120px;width:auto;opacity:.16;filter:grayscale(1) brightness(2)}
+.btile:hover .bphoto{opacity:.55;transform:scale(1.05)}
+.btile.on .bphoto{opacity:.62}
 .emblem{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,201,87,.35);background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.12),rgba(0,0,0,.25));font-family:"Instrument Serif",serif;font-size:26px;letter-spacing:.02em;color:var(--glow2);box-shadow:0 0 24px -6px var(--tint)}
 .emblem img{max-width:70%;max-height:70%;object-fit:contain}
 .btile .bn{font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:14px}
@@ -82,6 +88,7 @@ h1 em{font-style:italic;background:linear-gradient(100deg,var(--glow2),var(--glo
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin:-2px 0 10px}
 .tag{font-size:11px;letter-spacing:.04em;padding:4px 9px;border-radius:999px;border:1px solid rgba(255,201,87,.28);color:var(--gold);background:rgba(243,140,71,.08)}
 .tag.value{background:linear-gradient(135deg,rgba(255,201,87,.25),rgba(243,140,71,.2));color:#ffe2b0}
+.badge.hold{top:auto;bottom:14px;left:14px;color:#ffe2b0;border-color:rgba(255,201,87,.35)}
 .badge.pk{left:auto;right:14px;top:48px;background:linear-gradient(135deg,var(--glow2),var(--glow1));color:#1a0d05;border:none;font-weight:600}
 .pickbox{border-radius:16px;padding:14px 16px;margin-bottom:18px;border:1px solid rgba(255,201,87,.3);background:rgba(255,201,87,.06);font-size:13px;color:var(--muted);line-height:1.6}
 .pickbox b{color:var(--glow2);font-weight:600;letter-spacing:.06em}
@@ -225,6 +232,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--dim);fon
 <section class="filters"><div class="wrap">
   <div class="frow" id="pickRow"><span class="flabel" data-t="picks"></span></div>
   <div class="frow" id="modelRow"><span class="flabel" data-t="model"></span></div>
+  <div class="frow" id="eligRow"><span class="flabel" data-t="import"></span></div>
   <div class="frow" id="srcRow"><span class="flabel" data-t="source"></span></div>
   <div class="frow" style="margin-top:12px">
     <span class="count" id="count"></span>
@@ -260,7 +268,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--dim);fon
 <footer><div class="wrap" data-t="foot"></div></footer>
 
 <script>
-/* Data from cornesmotors.com/usedcar & /usedcar/ferrari (the stock Cornes also lists on Carsensor), collected 20 Nov 2026. Picks: within each model, price (excl. tax) is fitted against year and mileage across these listings; a share of picks per model goes to the cars priced furthest below that line, with small bonuses for low mileage, newer cars and Cornes warranty.
+/* Data from cornesmotors.com/usedcar & /usedcar/ferrari (the stock Cornes also lists on Carsensor), collected 20 Nov 2026. Malaysia only allows used imports registered at least 12 months: cars registered 6–12 months ago are shown with the month they become eligible (they can be bought now and stored in Japan); cars under 6 months are hidden and appear automatically once they reach 6 months. Picks: within each model, price (excl. tax) is fitted against year and mileage across these listings; a share of picks per model goes to the cars priced furthest below that line, with small bonuses for low mileage, newer cars and Cornes warranty.
    Filter: Ferrari / Lamborghini / Rolls-Royce, right-hand drive, first registered 2022 or later.
    Fields: id, brand, model, price incl. 10% tax (JPY), total payment (JPY), km, first reg (YYYY-MM), inspection, ext, int, store, cc, gearbox, image folder, images */
 const IMG = "https://static-cornes.s3.amazonaws.com/tzy0td2h07pi/public/web/master/";
@@ -299,7 +307,7 @@ const RAW = [
 ["a0JJ3000008LATOMA4","ROLLSROYCE","Black Badge Cullinan Series II",68500000,68800000,2400,"2025-01","2028/01","Black","Grace White / Black","RRT",6749,"8AT","SCA42HA08SU228646",["BwMmxRbbt.jpg","_rH1NdsyW.jpg","5aXAFIAA8.jpg","cTjJvc3U3F.jpg","qfK8Wkol-p.jpg","4LLHiGXlSL.jpg","TCm46eOUNv.jpg","fk13UyM9an.jpg","hpMvxaOmDm.jpg","XOwpL0ftq.jpg","p9ixait9y8.jpg","TeNFnvu3-I.jpg"]]
 ];
 
-const PICKS = {"a0J5i00000K5jXrEAJ": {"r": -0.076, "n": 6, "t": ["top", "value", "cornes"]}, "a0JTL00000Fp6fS2AR": {"r": -0.044, "n": 6, "t": ["fair", "lowkm", "new", "cornes"]}, "AU7456095050": {"r": -0.141, "n": 39, "t": ["top", "value", "lowkm", "new"]}, "AU7042085333": {"r": -0.108, "n": 39, "t": ["value", "lowkm"]}, "AU6908943864": {"r": -0.088, "n": 39, "t": ["value", "lowkm", "new"]}, "AU7185930642": {"r": -0.073, "n": 39, "t": ["value", "lowkm"]}, "AU7513043598": {"r": -0.1, "n": 9, "t": ["top", "value"]}, "a0J5i00000DS0x6EAD": {"r": -0.064, "n": 9, "t": ["value", "cornes"]}, "a0J5i000005FvrEEAS": {"r": null, "n": 1, "t": ["top", "cornes", "rare"]}, "AU7267372200": {"r": -0.1, "n": 10, "t": ["top", "value", "lowkm", "new"]}, "AU7086549375": {"r": -0.072, "n": 10, "t": ["value", "lowkm"]}, "a0JTL00000FtKog2AF": {"r": -0.044, "n": 14, "t": ["top", "fair", "lowkm", "new", "cornes"]}, "a0JTL00000FXBYl2AP": {"r": -0.028, "n": 14, "t": ["fair", "lowkm", "new", "cornes"]}, "AU7511711358": {"r": -0.048, "n": 14, "t": ["fair", "lowkm"]}, "a0JJ300000650YtMAI": {"r": -0.066, "n": 12, "t": ["top", "value", "lowkm", "cornes"]}, "AU6615438539": {"r": -0.086, "n": 12, "t": ["value"]}, "a0J5i00000JkZDGEA3": {"r": -0.05, "n": 12, "t": ["value", "lowkm", "cornes"]}, "a0J5i00000LDN2eEAH": {"r": 0, "n": 3, "t": ["top", "fair", "lowkm", "cornes"]}, "AU6164386996": {"r": -0.011, "n": 3, "t": ["fair", "lowkm"]}, "a0JJ3000008LATOMA4": {"r": -0.029, "n": 6, "t": ["top", "fair", "cornes"]}, "a0JTL00000DuiDR2AZ": {"r": -0.011, "n": 6, "t": ["fair", "new", "cornes"]}, "a0JTL000003pL772AE": {"r": null, "n": 1, "t": ["top", "cornes", "rare"]}, "a0JTL00000Huwu12AB": {"r": -0.023, "n": 3, "t": ["top", "fair", "new", "cornes"]}, "a0JTL000007XB3u2AG": {"r": 0, "n": 3, "t": ["fair", "lowkm", "new", "cornes"]}, "a0JTL00000O0OMH2A3": {"r": -0.12, "n": 2, "t": ["top", "value", "lowkm", "new", "cornes"]}, "a0JJ3000006OFFXMA4": {"r": -0.145, "n": 2, "t": ["top", "value", "cornes", "rare"]}, "AU7464162168": {"r": -0.049, "n": 7, "t": ["top", "fair"]}, "AU7500369538": {"r": -0.018, "n": 7, "t": ["fair"]}, "AU6615751005": {"r": null, "n": 1, "t": ["top", "lowkm", "new", "rare"]}, "AU7148829331": {"r": null, "n": 0, "t": ["top", "lowkm", "new", "rare"]}, "AU7486945148": {"r": -0.025, "n": 4, "t": ["top", "fair", "lowkm"]}, "AU6662074485": {"r": -0.019, "n": 4, "t": ["fair"]}};
+const PICKS = {"a0J5i00000K5jXrEAJ": {"r": -0.076, "n": 6, "t": ["top", "value", "cornes"]}, "a0JTL00000Fp6fS2AR": {"r": -0.044, "n": 6, "t": ["fair", "lowkm", "cornes"]}, "AU7456095050": {"r": -0.141, "n": 39, "t": ["top", "value", "lowkm"]}, "AU7042085333": {"r": -0.108, "n": 39, "t": ["value", "lowkm"]}, "AU6908943864": {"r": -0.088, "n": 39, "t": ["value", "lowkm", "new"]}, "AU7185930642": {"r": -0.073, "n": 39, "t": ["value", "lowkm"]}, "AU7513043598": {"r": -0.1, "n": 9, "t": ["top", "value"]}, "a0J5i00000DS0x6EAD": {"r": -0.064, "n": 9, "t": ["value", "cornes"]}, "a0J5i000005FvrEEAS": {"r": null, "n": 1, "t": ["top", "cornes", "rare"]}, "AU7267372200": {"r": -0.1, "n": 10, "t": ["top", "value", "lowkm"]}, "AU7086549375": {"r": -0.072, "n": 10, "t": ["value", "lowkm"]}, "a0JTL00000FtKog2AF": {"r": -0.044, "n": 14, "t": ["top", "fair", "lowkm", "cornes"]}, "a0JTL00000FXBYl2AP": {"r": -0.028, "n": 14, "t": ["fair", "lowkm", "new", "cornes"]}, "AU7511711358": {"r": -0.048, "n": 14, "t": ["fair", "lowkm"]}, "a0JJ300000650YtMAI": {"r": -0.066, "n": 12, "t": ["top", "value", "lowkm", "cornes"]}, "AU6615438539": {"r": -0.086, "n": 12, "t": ["value"]}, "a0J5i00000JkZDGEA3": {"r": -0.05, "n": 12, "t": ["value", "lowkm", "cornes"]}, "a0J5i00000LDN2eEAH": {"r": 0, "n": 3, "t": ["top", "fair", "lowkm", "cornes"]}, "AU6164386996": {"r": -0.011, "n": 3, "t": ["fair", "lowkm"]}, "a0JJ3000008LATOMA4": {"r": -0.029, "n": 6, "t": ["top", "fair", "cornes"]}, "a0JTL00000DuiDR2AZ": {"r": -0.011, "n": 6, "t": ["fair", "cornes"]}, "a0JTL000003pL772AE": {"r": null, "n": 1, "t": ["top", "cornes", "rare"]}, "a0JTL00000Huwu12AB": {"r": -0.023, "n": 3, "t": ["top", "fair", "cornes"]}, "a0JTL000007XB3u2AG": {"r": 0, "n": 3, "t": ["fair", "lowkm", "new", "cornes"]}, "AU6710560181": {"r": 0, "n": 2, "t": ["top", "fair", "lowkm", "new"]}, "a0JJ3000006OFFXMA4": {"r": -0.145, "n": 2, "t": ["top", "value", "cornes", "rare"]}, "AU7464162168": {"r": -0.049, "n": 7, "t": ["top", "fair"]}, "AU7500369538": {"r": -0.018, "n": 7, "t": ["fair"]}, "AU6615751005": {"r": null, "n": 1, "t": ["top", "lowkm", "new", "rare"]}, "AU7148829331": {"r": null, "n": 0, "t": ["top", "lowkm", "new", "rare"]}, "AU7486945148": {"r": -0.025, "n": 4, "t": ["top", "fair", "lowkm"]}, "AU6662074485": {"r": -0.019, "n": 4, "t": ["fair"]}};
 /* Optional: paste URLs of brand logo files you are licensed to use, e.g. FERRARI:"logos/ferrari.png". Empty = monogram. */
 const BRAND_LOGOS = {FERRARI:"", LAMBO:"", ROLLSROYCE:""};
 const BRAND_META = {ALL:{mono:"W",tint:"#f38c47"},FERRARI:{mono:"F",tint:"#e0402e",o:"Maranello · Italia"},LAMBO:{mono:"L",tint:"#e2b23a",o:"Sant\u2019Agata · Italia"},ROLLSROYCE:{mono:"RR",tint:"#8a8fb8",o:"Goodwood · England"}};
@@ -351,7 +359,12 @@ const CSENSOR = CS_RAW.map(r=>{
     insp:insp||"",ext,int,store:{en:shop+" · "+pref, zh:shop+" · "+(PREF_ZH[pref]||pref)},cc,tm,flag:!!flag,
     imgs,url:"https://www.carsensor.net/usedcar/detail/"+id+"/index.html"};
 });
-const CARS = CORNES.concat(CSENSOR).map(c=>({...c, family:family(c.brand,c.model), excl:c.incl?Math.round(c.incl/1.1):0, pick:PICKS[c.id]||null}));
+/* Malaysia import rule: car must be registered >= 12 months. Cars registered 6-11 months ago are kept and held in Japan until they qualify; under 6 months are hidden. Computed from today's date. */
+const NOW=new Date(), NOWM=NOW.getFullYear()*12+NOW.getMonth()+1;
+const regM=c=>{const [y,m]=c.reg.split("/").map(Number); return y*12+(m||12);};
+const ymFmt=n=>{const y=Math.floor((n-1)/12), m=n-y*12; return y+"/"+String(m).padStart(2,"0");};
+const ALL_CARS = CORNES.concat(CSENSOR).map(c=>{ const age=NOWM-regM(c); return {...c, family:family(c.brand,c.model), excl:c.incl?Math.round(c.incl/1.1):0, pick:PICKS[c.id]||null, age, elig:age>=12?"now":"hold", holdUntil:ymFmt(regM(c)+12)}; });
+const CARS = ALL_CARS.filter(c=>c.age>=6);
 
 /* i18n */
 const TAGS=["top","value","fair","lowkm","new","cornes","rare"];
@@ -359,7 +372,7 @@ const T={
  en:{eyebrow:"Cornes Motors × Carsensor · RHD · 2022+",
    h1:"Right-hand drive, <em>warmly</em> curated.",
    lede:"Every right-hand-drive Ferrari, Lamborghini and Rolls-Royce first registered in 2022 or later, from Cornes Motors and dealers across Japan on Carsensor. Duplicates removed.",
-   hint:"Swipe or tap to enlarge",picks:"Selection",allCars:"All cars",picksOnly:"WARMGLOW Picks",pickBadge:"Pick",allBrands:"All brands",allSub:"Ferrari · Lamborghini · Rolls-Royce",
+   hint:"Swipe or tap to enlarge",import:"Malaysia import",eligNow:"Eligible now",eligHold:"Hold in Japan",holdTo:"Ready",eligNowLong:"Registered over 12 months ago, can be imported now",eligHoldLong:d=>`Registered 6–12 months ago: buy now, keep in Japan, import from ${d}`,picks:"Selection",allCars:"All cars",picksOnly:"WARMGLOW Picks",pickBadge:"Pick",allBrands:"All brands",allSub:"Ferrari · Lamborghini · Rolls-Royce",
    tag_top:"Top pick in model",tag_value:"Great value",tag_fair:"Fair price",tag_lowkm:"Low mileage",tag_new:"Nearly new",tag_cornes:"Cornes certified",tag_rare:"Rare find",
    why:c=>{const p=c.pick, base=`${c.year} · ${c.km.toLocaleString("en-US")} km`; if(p.r==null) return `One of very few right-hand-drive ${c.model} listings in Japan (${base}), so there aren't enough comparable cars to benchmark the price.`; const d=Math.round(Math.abs(p.r)*100); return `${p.r<0?`About ${d}% below`:d===0?"In line with":`About ${d}% above`} the expected price for this model at this age and mileage (${base}), benchmarked against ${p.n} comparable RHD listings in Japan.${c.src==="cornes"?" Sold by Cornes with an approved-used warranty.":""}`;},
    brand:"Brand",model:"Model",source:"Source",poa:"Price on request",poaNote:"Ask the dealer for a price",na:"Not listed",fromInsp:"(month from inspection)",flag:"· Cornes site says LHD — please confirm",srcCs:"View original listing on Carsensor →",all:"All",cars:"cars",shown:n=>`${n} car${n===1?"":"s"} shown`,
@@ -375,7 +388,7 @@ const T={
  zh:{eyebrow:"Cornes Motors × Carsensor · 右舵 · 2022年起",
    h1:"右舵臻选，<em>温暖</em>呈现。",
    lede:"汇总 Cornes Motors 与 Carsensor 全日本经销商在售的法拉利、兰博基尼、劳斯莱斯：2022 年及以后首次登记、右舵，已去重。",
-   hint:"左右滑动 · 点击放大",picks:"精选",allCars:"全部车辆",picksOnly:"WARMGLOW 精选",pickBadge:"精选",allBrands:"全部品牌",allSub:"法拉利 · 兰博基尼 · 劳斯莱斯",
+   hint:"左右滑动 · 点击放大",import:"马来西亚进口",eligNow:"可立即进口",eligHold:"需在日本等待",holdTo:"可进口",eligNowLong:"登记已满 12 个月，可直接进口",eligHoldLong:d=>`登记 6–12 个月：现在购买、暂放日本，${d} 起可进口`,picks:"精选",allCars:"全部车辆",picksOnly:"WARMGLOW 精选",pickBadge:"精选",allBrands:"全部品牌",allSub:"法拉利 · 兰博基尼 · 劳斯莱斯",
    tag_top:"同车型首选",tag_value:"超值",tag_fair:"价格合理",tag_lowkm:"低里程",tag_new:"准新车",tag_cornes:"Cornes 认证",tag_rare:"稀有",
    why:c=>{const p=c.pick, base=`${c.year}年 · ${c.km.toLocaleString("en-US")} km`; if(p.r==null) return `日本在售的右舵 ${c.model} 极少（${base}），没有足够的同款车来对比价格。`; const d=Math.round(Math.abs(p.r)*100); return `${p.r<0?`比同年份、同里程的预期价格低约 ${d}%`:d===0?"与同年份、同里程的预期价格持平":`比同年份、同里程的预期价格高约 ${d}%`}（${base}），对比基准为日本 ${p.n} 台同款右舵在售车。${c.src==="cornes"?"由 Cornes 销售，附认证二手车保证。":""}`;},
    brand:"品牌",model:"车型",source:"来源",poa:"价格面议",poaNote:"请向经销商询价",na:"未标注",fromInsp:"（月份取自车检）",flag:"· Cornes 官网标注为左舵，请确认",srcCs:"查看 Carsensor 原始页面 →",all:"全部",cars:"辆",shown:n=>`共 ${n} 辆`,
@@ -387,9 +400,9 @@ const T={
    inspInc:"售出时做车检",src:"查看 Cornes 原始页面 →",curated:"Curated Selezione",
    ev:"纯电动",at8:"8速自动",at7:"7速双离合",
    note:r=>`日本标价均含10%消费税。"税前" = 标价 ÷ 1.1（出口买家通常按此价格支付）。马币按 1 JPY = ${r} MYR（中间价，约数）换算，可在筛选栏中修改汇率。`,
-   foot:"数据来自 cornesmotors.com/usedcar、/usedcar/ferrari 与 carsensor.net（筛选：2022年起、右舵），采集于 2026年11月20日。精选方法：在每个车型内用年份与里程拟合税前价格，每个车型按数量分配名额，优先选价格低于预期最多的车，低里程、较新车与 Cornes 保证车略有加分。两站重复的 Cornes 车辆按车架号末三位去重，只保留一条；Carsensor 未提供登记月份，以车检月份代替。图片直接从 Cornes 与 Carsensor 的图片服务器加载。价格与库存会变动，请以展厅确认为准。本页为非官方展示，与 Cornes、Carsensor、法拉利、兰博基尼、劳斯莱斯无关联。"}
+   foot:"数据来自 cornesmotors.com/usedcar、/usedcar/ferrari 与 carsensor.net（筛选：2022年起、右舵），采集于 2026年11月20日。马来西亚只允许登记满 12 个月的二手车进口：登记 6–12 个月的车会标注可进口月份（可先购买、暂存日本）；未满 6 个月的车暂不显示，满 6 个月后自动出现。精选方法：在每个车型内用年份与里程拟合税前价格，每个车型按数量分配名额，优先选价格低于预期最多的车，低里程、较新车与 Cornes 保证车略有加分。两站重复的 Cornes 车辆按车架号末三位去重，只保留一条；Carsensor 未提供登记月份，以车检月份代替。图片直接从 Cornes 与 Carsensor 的图片服务器加载。价格与库存会变动，请以展厅确认为准。本页为非官方展示，与 Cornes、Carsensor、法拉利、兰博基尼、劳斯莱斯无关联。"}
 };
-let lang="en", brandF="ALL", modelF="ALL", srcF="ALL", pickF="ALL", sortF="new", RATE=0.0258;
+let lang="en", brandF="ALL", modelF="ALL", srcF="ALL", pickF="ALL", eligF="ALL", sortF="new", RATE=0.0258;
 try{const s=localStorage.getItem("gg_rate"); if(s) RATE=+s;}catch(e){}
 
 const $=s=>document.querySelector(s);
@@ -414,7 +427,8 @@ function renderFilters(){
     const m=BRAND_META[k], n=k==="ALL"?CARS.length:CARS.filter(c=>c.brand===k).length;
     const logo=k!=="ALL"&&BRAND_LOGOS[k];
     const b=document.createElement("button"); b.className="btile"+(brandF===k?" on":""); b.style.setProperty("--tint",m.tint);
-    b.innerHTML=`<span class="emblem">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="bc">${n}</span><span><div class="bn">${k==="ALL"?t("allBrands"):BRANDS[k]}</div><div class="bo">${k==="ALL"?t("allSub"):m.o}</div></span>`;
+    const ph=(CARS.filter(c=>(k==="ALL"||c.brand===k)&&c.pick)[0]||CARS.find(c=>k==="ALL"||c.brand===k)||{imgs:[""]}).imgs[0];
+    b.innerHTML=`<span class="bphoto" style="background-image:url('${ph}')"></span><span class="wm">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="emblem">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="bc">${n}</span><span><div class="bn">${k==="ALL"?t("allBrands"):BRANDS[k]}</div><div class="bo">${k==="ALL"?t("allSub"):m.o}</div></span>`;
     b.onclick=()=>{brandF=k; modelF="ALL"; renderFilters(); renderGrid();}; br.appendChild(b);
   });
   const pr=$("#pickRow"); pr.querySelectorAll(".pill").forEach(e=>e.remove());
@@ -430,6 +444,11 @@ function renderFilters(){
     const b=document.createElement("button"); b.className="pill"+(modelF===k?" on":""); b.textContent=v+(n?` · ${n}`:"");
     b.onclick=()=>{modelF=k; renderFilters(); renderGrid();}; mr.appendChild(b);
   });
+  const er=$("#eligRow"); er.querySelectorAll(".pill").forEach(e=>e.remove());
+  [["ALL",t("all")],["now","✓ "+t("eligNow")+" · "+CARS.filter(c=>c.elig==="now").length],["hold","⏳ "+t("eligHold")+" · "+CARS.filter(c=>c.elig==="hold").length]].forEach(([k,v])=>{
+    const b=document.createElement("button"); b.className="pill"+(eligF===k?" on":""); b.textContent=v;
+    b.onclick=()=>{eligF=k; renderFilters(); renderGrid();}; er.appendChild(b);
+  });
   const sr=$("#srcRow"); sr.querySelectorAll(".pill").forEach(e=>e.remove());
   [["ALL",t("all")],["cornes","Cornes Motors"],["carsensor","Carsensor"]].forEach(([k,v])=>{
     const b=document.createElement("button"); b.className="pill"+(srcF===k?" on":""); b.textContent=v;
@@ -437,7 +456,7 @@ function renderFilters(){
   });
 }
 function list(){
-  let l=CARS.filter(c=>(brandF==="ALL"||c.brand===brandF)&&(modelF==="ALL"||c.family===modelF)&&(srcF==="ALL"||c.src===srcF)&&(pickF==="ALL"||(c.pick&&(pickF==="PICK"||c.pick.t.includes(pickF)))));
+  let l=CARS.filter(c=>(brandF==="ALL"||c.brand===brandF)&&(modelF==="ALL"||c.family===modelF)&&(srcF==="ALL"||c.src===srcF)&&(eligF==="ALL"||c.elig===eligF)&&(pickF==="ALL"||(c.pick&&(pickF==="PICK"||c.pick.t.includes(pickF)))));
   const P=c=>c.incl||(sortF==="low"?1e12:-1); const s={new:(a,b)=>b.reg.localeCompare(a.reg),low:(a,b)=>P(a)-P(b),high:(a,b)=>P(b)-P(a),km:(a,b)=>a.km-b.km}[sortF];
   return l.sort(s);
 }
@@ -446,7 +465,7 @@ function renderGrid(){
   $("#grid").innerHTML=l.length?l.map((c,i)=>`
    <article class="card" style="animation-delay:${Math.min(i,12)*45}ms" data-id="${c.id}">
      <div class="thumb">
-       <span class="badge">${c.reg}</span><span class="badge r">${c.src==="cornes"?"Cornes":"Carsensor"}</span>${c.pick?`<span class="badge pk">★ ${t("pickBadge")}</span>`:""}
+       <span class="badge">${c.reg}</span><span class="badge r">${c.src==="cornes"?"Cornes":"Carsensor"}</span>${c.pick?`<span class="badge pk">★ ${t("pickBadge")}</span>`:""}${c.elig==="hold"?`<span class="badge hold">⏳ ${t("holdTo")} ${c.holdUntil}</span>`:""}
        <img loading="lazy" src="${c.imgs[0]}" alt="${BRANDS[c.brand]} ${c.model}" onerror="this.style.opacity=0">
      </div>
      <div class="cbody">
@@ -483,6 +502,7 @@ function openDetail(id,i){
       <div class="spec"><span>${t("reg")}</span><b>${c.reg}${c.regFromInsp?` <small style="color:var(--dim);font-weight:400">${t("fromInsp")}</small>`:""}</b></div>
       <div class="spec"><span>${t("ext")}</span><b>${c.ext||t("na")}</b></div>
       <div class="spec"><span>${t("int")}</span><b>${c.int||t("na")}</b></div>
+      <div class="spec" style="grid-column:1/-1"><span>${t("import")}</span><b>${c.elig==="now"?"✓ "+t("eligNowLong"):"⏳ "+t("eligHoldLong")(c.holdUntil)}</b></div>
       <div class="spec"><span>${t("drive")}</span><b>${t("rhd")}${c.flag?` <small style="color:var(--glow2);font-weight:400">${t("flag")}</small>`:""}</b></div>
       <div class="spec"><span>${t("insp")}</span><b>${c.insp?inspFmt(c):t("inspInc")}</b></div>
       <div class="spec"><span>${t("eng")}</span><b>${c.cc?c.cc.toLocaleString("en-US")+" cc":t("ev")}</b></div>
