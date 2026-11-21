@@ -181,7 +181,9 @@ input.rate{width:92px;text-align:center}
 .stage{width:min(100%,calc(58vh * 1.6));aspect-ratio:16/10;margin:0 auto;border:1px solid var(--line);border-radius:20px;background:#120c08}
 @media (orientation:portrait){.stage{width:min(100%,calc(46vh * 4 / 3));aspect-ratio:4/3}}
 .stage img{object-fit:contain}
-.gal .strip{width:min(100%,1180px);margin:0 auto}
+.gal .strip{width:min(100%,calc(58vh * 1.6));margin:0 auto}
+@media (orientation:portrait){.gal .strip{width:min(100%,calc(46vh * 4 / 3))}}
+.prow{gap:14px}.prow b{text-align:right}
 .hint.zoom{border:1px solid rgba(255,255,255,.22);color:var(--text);font:inherit;font-size:13px;padding:8px 14px;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .hint.zoom:hover{background:rgba(255,122,47,.6)}
 @media (pointer:coarse){.hint.zoom{min-height:44px;padding:10px 16px;font-size:14px}}
@@ -462,6 +464,7 @@ function openDetail(id,i){
     <a class="src" href="${c.url}" target="_blank" rel="noopener">${c.src==="cornes"?t("src"):t("srcCs")}</a>`;
   $("#strip").innerHTML=c.imgs.map((u,k)=>`<img loading="lazy" src="${u}" data-k="${k}" alt="" onerror="this.remove()">`).join("");
   $("#strip").querySelectorAll("img").forEach(im=>im.onclick=()=>show(+im.dataset.k));
+  const one=c.imgs.length<=1; ["#prev","#next","#strip"].forEach(q=>$(q).style.display=one?"none":"");
   const l=list(); const p=l.findIndex(x=>x.id===id);
   $("#dcount").textContent=p>=0?`${p+1} / ${l.length}`:"";
   show(idx);
