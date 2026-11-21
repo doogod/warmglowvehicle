@@ -3,7 +3,7 @@
 import json, re, os, sys, datetime
 from common import *
 
-d = load(os.path.join(DATA, 'data.json')); picks = load(os.path.join(DATA, 'picks.json'))
+d = load(os.path.join(DATA, 'data.json')); picks = load(os.path.join(DATA, 'picks.json')); rec = load(os.path.join(DATA, 'rec.json'), {})
 day = datetime.date.fromisoformat(sys.argv[1]) if len(sys.argv) > 1 else datetime.date.today()
 
 def enc(imgs):
@@ -20,7 +20,7 @@ def enc(imgs):
     return 's|' + folder + '|' + main + '|' + ','.join(ml)
 
 rows = [[r['id'], 'k' if r['src'] == 'cornes' else 's', r['brand'], r['model'], r['family'], r['reg'], 1 if r['regFromInsp'] else 0, r['insp'], r['km'], r['ext'], r['int'],
-         r['cc'], r['tm'], r['incl'], r['total'], r['store']['en'], r['store']['zh'], enc(r['imgs']), 1 if r['flag'] else 0, 1 if r['isNew'] else 0, 1 if r['curated'] else 0] for r in d]
+         r['cc'], r['tm'], r['incl'], r['total'], r['store']['en'], r['store']['zh'], enc(r['imgs']), 1 if r['flag'] else 0, 1 if r['isNew'] else 0, 1 if r['curated'] else 0, rec.get(r['id'], 0)] for r in d]
 
 html = open(INDEX, encoding='utf-8').read()
 html = re.sub(r'^const PICKS = .*;$', lambda m: 'const PICKS = ' + json.dumps(picks, separators=(',', ':')) + ';', html, count=1, flags=re.M)

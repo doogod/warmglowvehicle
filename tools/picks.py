@@ -43,6 +43,23 @@ for (b,f),arr in fams.items():
         if len(arr)<=2: t.append('rare')
         picks[r['id']]={'r':None if (r['_res'] is None or r['_np']<3) else round(r['_res'],3),'n':r['_np'],'t':t}
 json.dump(picks,open(os.path.join(DATA,'picks.json'),'w'))
+
+# ---- Recommended order (default sort on the site). Rough, relative only:
+#  brand weight (Ferrari/Lamborghini first) + price level (dearer first) + value vs. market (cheaper than expected first)
+BRAND_W={'FERRARI':3.0,'LAMBO':3.0,'ROLLSROYCE':1.6,'MCLAREN':1.2,'BENTLEY':1.0,'PORSCHE':0.6,'MASERATI':0.0}
+fam_med={}
+for (b,f),arr in fams.items():
+    ps=sorted(r['incl'] for r in arr if r['incl']); fam_med[(b,f)]=ps[len(ps)//2] if ps else 0
+rec={}
+for r in d:
+    price=r['incl'] or fam_med.get((r['brand'],r['family'])) or 2e7          # price on request -> model median
+    res=r.get('_res'); val=0 if res is None else max(-0.25,min(0.25,-res))  # +0.25 = 25 % under market
+    sc=BRAND_W.get(r['brand'],0)+1.5*math.log10(price/1e7)+6*val
+    if r['id'] in picks: sc+=0.4
+    if r['flag']: sc-=1
+    if age(r)<12: sc-=0.2                                                     # still has to wait in Japan
+    rec[r['id']]=round(sc,2)
+json.dump(rec,open(os.path.join(DATA,'rec.json'),'w'))
 print(len(picks)); print(Counter(t for p in picks.values() for t in p['t']))
 print(Counter((r['brand']) for r in d if r['id'] in picks))
 for r in d:
