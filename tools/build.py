@@ -80,6 +80,8 @@ def cornes_rec(c, imgs):
                 imgs=imgs, url="https://www.cornesmotors.com/usedcar" + ("/ferrari" if b == 'FERRARI' else "") + "?sfid=" + c['sfid'], flag=False, vin=c['vinSuffix'])
 
 def cs_imgs(folder, main, ml):
+    # Carsensor slots 20–29 hold the dealer's service/promo pictures (coating, warranty…), not the car
+    ml = [s for s in ml if not 20 <= int(s.split('_')[0]) <= 29]
     U = folder.split('/')[-1]
     imgs = ([f"https://ccsrpcma.carsensor.net/CSphoto/bkkn/{folder}/{main}"] if main else []) + [f"https://ccsrpcml.carsensor.net/CSphoto/ml/{folder}/{U}_{s}.jpg" for s in ml]
     return [u for u in imgs if 'UZ0027698225' not in u]
