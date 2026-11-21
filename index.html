@@ -175,6 +175,19 @@ input.rate{width:92px;text-align:center}
 .spec b{font-weight:500;font-size:15px}
 .note{font-size:12px;color:var(--dim);margin-top:16px;line-height:1.6}
 .src{display:inline-block;margin-top:18px;font-size:13px;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(243,194,122,.4)}
+/* Detail gallery: framed, not edge-to-edge, so the thumbnails and info peek below */
+.gal{max-width:1180px;margin:0 auto;padding:16px max(24px,env(safe-area-inset-right)) 0 max(24px,env(safe-area-inset-left))}
+.gal .dtop{position:static;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;pointer-events:auto}
+.stage{width:min(100%,calc(58vh * 1.6));aspect-ratio:16/10;margin:0 auto;border:1px solid var(--line);border-radius:20px;background:#120c08}
+@media (orientation:portrait){.stage{width:min(100%,calc(46vh * 4 / 3));aspect-ratio:4/3}}
+.stage img{object-fit:contain}
+.gal .strip{width:min(100%,1180px);margin:0 auto}
+.hint.zoom{border:1px solid rgba(255,255,255,.22);color:var(--text);font:inherit;font-size:13px;padding:8px 14px;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.hint.zoom:hover{background:rgba(255,122,47,.6)}
+@media (pointer:coarse){.hint.zoom{min-height:44px;padding:10px 16px;font-size:14px}}
+@media (max-width:600px){.gal{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}}
+/* Lightbox: as big as the screen allows */
+.lb img{width:100%;height:100%}
 /* Lightbox */
 .lb{position:fixed;inset:0;z-index:80;background:rgba(5,3,2,.96);display:none;align-items:center;justify-content:center;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 .lb.open{display:flex;animation:fade .25s}
@@ -250,16 +263,16 @@ footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--dim);fon
 <div class="detail" id="detail"><div class="dpanel">
   <div class="dlayout">
     <div class="gal">
+      <div class="dtop">
+        <button class="pill" id="back" data-t="back"></button>
+        <span class="count" id="dcount"></span>
+      </div>
       <div class="stage">
         <div class="stagebg" id="dbg"></div>
         <img id="dimg" alt="">
-        <div class="dtop">
-          <button class="pill" id="back" data-t="back"></button>
-          <span class="count" id="dcount"></span>
-        </div>
         <button class="nav-btn p" id="prev" aria-label="Previous photo">‹</button>
         <button class="nav-btn n" id="next" aria-label="Next photo">›</button>
-        <span class="counter" id="dctr"></span><span class="hint" id="hint"></span>
+        <span class="counter" id="dctr"></span><button class="hint zoom" id="hint" type="button"></button>
       </div>
       <div class="strip" id="strip"></div>
     </div>
@@ -303,7 +316,7 @@ const T={
  en:{eyebrow:"Cornes Motors × Carsensor · RHD · 2022+",
    h1:"Right-hand drive, <em>warmly</em> curated.",
    lede:"Every right-hand-drive Ferrari, Lamborghini and Rolls-Royce first registered in 2022 or later, from Cornes Motors and dealers across Japan on Carsensor. Duplicates removed.",
-   hint:"Swipe or tap to enlarge",import:"Malaysia import",pickBrand:"Choose a brand above to filter by model",newListing:"New since last update",newBadge:"NEW",more:n=>`Show more · ${n} left`,auto:"Automatic",autoN:n=>`${n}-speed auto`,manualN:n=>`${n}-speed manual`,eligNow:"Eligible now",eligHold:"Hold in Japan",holdTo:"Ready",eligNowLong:"Registered over 12 months ago, can be imported now",eligHoldLong:d=>`Registered 6–12 months ago: buy now, keep in Japan, import from ${d}`,picks:"Selection",allCars:"All cars",picksOnly:"WARMGLOW Picks",pickBadge:"Pick",allBrands:"All brands",allSub:"7 brands · RHD · 2022+",
+   hint:"⤢ View full size",import:"Malaysia import",pickBrand:"Choose a brand above to filter by model",newListing:"New since last update",newBadge:"NEW",more:n=>`Show more · ${n} left`,auto:"Automatic",autoN:n=>`${n}-speed auto`,manualN:n=>`${n}-speed manual`,eligNow:"Eligible now",eligHold:"Hold in Japan",holdTo:"Ready",eligNowLong:"Registered over 12 months ago, can be imported now",eligHoldLong:d=>`Registered 6–12 months ago: buy now, keep in Japan, import from ${d}`,picks:"Selection",allCars:"All cars",picksOnly:"WARMGLOW Picks",pickBadge:"Pick",allBrands:"All brands",allSub:"7 brands · RHD · 2022+",
    tag_top:"Top pick in model",tag_value:"Great value",tag_fair:"Fair price",tag_lowkm:"Low mileage",tag_new:"Nearly new",tag_cornes:"Cornes certified",tag_rare:"Rare find",
    why:c=>{const p=c.pick, base=`${c.year} · ${c.km.toLocaleString("en-US")} km`; if(p.r==null) return `One of very few right-hand-drive ${c.model} listings in Japan (${base}), so there aren't enough comparable cars to benchmark the price.`; const d=Math.round(Math.abs(p.r)*100); return `${p.r<0?`About ${d}% below`:d===0?"In line with":`About ${d}% above`} the expected price for this model at this age and mileage (${base}), benchmarked against ${p.n} comparable RHD listings in Japan.${c.src==="cornes"?" Sold by Cornes with an approved-used warranty.":""}`;},
    brand:"Brand",model:"Model",source:"Source",poa:"Price on request",poaNote:"Ask the dealer for a price",na:"Not listed",fromInsp:"(month from inspection)",flag:"· Cornes site says LHD — please confirm",srcCs:"View original listing on Carsensor →",all:"All",cars:"cars",shown:n=>`${n} car${n===1?"":"s"} shown`,
@@ -319,7 +332,7 @@ const T={
  zh:{eyebrow:"Cornes Motors × Carsensor · 右舵 · 2022年起",
    h1:"右舵臻选，<em>温暖</em>呈现。",
    lede:"汇总 Cornes Motors 与 Carsensor 全日本经销商在售的法拉利、兰博基尼、劳斯莱斯：2022 年及以后首次登记、右舵，已去重。",
-   hint:"左右滑动 · 点击放大",import:"马来西亚进口",pickBrand:"先在上方选择品牌，再按车型筛选",newListing:"本次更新新增",newBadge:"新",more:n=>`加载更多 · 还有 ${n} 台`,auto:"自动挡",autoN:n=>`${n} 速自动`,manualN:n=>`${n} 速手动`,eligNow:"可立即进口",eligHold:"需在日本等待",holdTo:"可进口",eligNowLong:"登记已满 12 个月，可直接进口",eligHoldLong:d=>`登记 6–12 个月：现在购买、暂放日本，${d} 起可进口`,picks:"精选",allCars:"全部车辆",picksOnly:"WARMGLOW 精选",pickBadge:"精选",allBrands:"全部品牌",allSub:"7 个品牌 · 右舵 · 2022 年起",
+   hint:"⤢ 查看大图",import:"马来西亚进口",pickBrand:"先在上方选择品牌，再按车型筛选",newListing:"本次更新新增",newBadge:"新",more:n=>`加载更多 · 还有 ${n} 台`,auto:"自动挡",autoN:n=>`${n} 速自动`,manualN:n=>`${n} 速手动`,eligNow:"可立即进口",eligHold:"需在日本等待",holdTo:"可进口",eligNowLong:"登记已满 12 个月，可直接进口",eligHoldLong:d=>`登记 6–12 个月：现在购买、暂放日本，${d} 起可进口`,picks:"精选",allCars:"全部车辆",picksOnly:"WARMGLOW 精选",pickBadge:"精选",allBrands:"全部品牌",allSub:"7 个品牌 · 右舵 · 2022 年起",
    tag_top:"同车型首选",tag_value:"超值",tag_fair:"价格合理",tag_lowkm:"低里程",tag_new:"准新车",tag_cornes:"Cornes 认证",tag_rare:"稀有",
    why:c=>{const p=c.pick, base=`${c.year}年 · ${c.km.toLocaleString("en-US")} km`; if(p.r==null) return `日本在售的右舵 ${c.model} 极少（${base}），没有足够的同款车来对比价格。`; const d=Math.round(Math.abs(p.r)*100); return `${p.r<0?`比同年份、同里程的预期价格低约 ${d}%`:d===0?"与同年份、同里程的预期价格持平":`比同年份、同里程的预期价格高约 ${d}%`}（${base}），对比基准为日本 ${p.n} 台同款右舵在售车。${c.src==="cornes"?"由 Cornes 销售，附认证二手车保证。":""}`;},
    brand:"品牌",model:"车型",source:"来源",poa:"价格面议",poaNote:"请向经销商询价",na:"未标注",fromInsp:"（月份取自车检）",flag:"· Cornes 官网标注为左舵，请确认",srcCs:"查看 Carsensor 原始页面 →",all:"全部",cars:"辆",shown:n=>`共 ${n} 辆`,
@@ -472,7 +485,7 @@ function swipe(el,onL,onR,onTap){ let x0=null,y0=0,t0=0; el.addEventListener("to
 const lbOpen=()=>{ $("#lb").classList.add("open"); }, lbClose=()=>$("#lb").classList.remove("open");
 swipe($(".stage"),()=>show(idx+1),()=>show(idx-1),lbOpen);
 swipe($("#lb"),()=>show(idx+1),()=>show(idx-1));
-$("#dimg").onclick=lbOpen; $("#lbx").onclick=lbClose; $("#lbp").onclick=e=>{e.stopPropagation();show(idx-1)}; $("#lbn").onclick=e=>{e.stopPropagation();show(idx+1)};
+$("#dimg").onclick=lbOpen; $("#hint").onclick=e=>{e.stopPropagation(); lbOpen();}; $("#lbx").onclick=lbClose; $("#lbp").onclick=e=>{e.stopPropagation();show(idx-1)}; $("#lbn").onclick=e=>{e.stopPropagation();show(idx+1)};
 $("#lb").addEventListener("click",e=>{ if(e.target.id==="lb") lbClose(); });
 $("#back").onclick=closeDetail;
 $("#detail").addEventListener("click",e=>{if(e.target.id==="detail") closeDetail();});
