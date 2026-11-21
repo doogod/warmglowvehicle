@@ -359,7 +359,7 @@ function renderFilters(){
     const logo=k!=="ALL"&&BRAND_LOGOS[k];
     const b=document.createElement("button"); b.className="btile"+(brandF===k?" on":""); b.style.setProperty("--tint",m.tint);
     const ph=(CARS.filter(c=>(k==="ALL"||c.brand===k)&&c.pick)[0]||CARS.find(c=>k==="ALL"||c.brand===k)||{imgs:[""]}).imgs[0];
-    b.innerHTML=`<span class="bphoto" style="background-image:url('${ph}')"></span><span class="wm">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="emblem">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="bc">${n}</span><span><div class="bn">${k==="ALL"?t("allBrands"):BRANDS[k]}</div><div class="bo">${k==="ALL"?t("allSub"):m.o}</div></span>`;
+    b.innerHTML=`<span class="wm">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="emblem">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="bc">${n}</span><span><div class="bn">${k==="ALL"?t("allBrands"):BRANDS[k]}</div><div class="bo">${k==="ALL"?t("allSub"):m.o}</div></span>`;
     b.onclick=()=>{brandF=k; modelF="ALL"; renderFilters(); renderGrid();}; br.appendChild(b);
   });
   const pr=$("#pickRow"); pr.querySelectorAll(".pill").forEach(e=>e.remove());
