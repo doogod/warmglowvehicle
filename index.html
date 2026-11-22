@@ -178,11 +178,14 @@ input.rate{width:92px;text-align:center}
 /* Detail gallery: framed, not edge-to-edge, so the thumbnails and info peek below */
 .gal{max-width:1180px;margin:0 auto;padding:16px max(24px,env(safe-area-inset-right)) 0 max(24px,env(safe-area-inset-left))}
 .gal .dtop{position:static;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;pointer-events:auto}
-.stage{width:min(100%,calc(58vh * 1.6));aspect-ratio:16/10;margin:0 auto;border:1px solid var(--line);border-radius:20px;background:#120c08}
-@media (orientation:portrait){.stage{width:min(100%,calc(46vh * 4 / 3));aspect-ratio:4/3}}
-.stage img{object-fit:contain}
-.gal .strip{width:min(100%,calc(58vh * 1.6));margin:0 auto}
-@media (orientation:portrait){.gal .strip{width:min(100%,calc(46vh * 4 / 3))}}
+/* Stage is 4:3 (the shape of nearly every dealer photo) and the photo fills it (cover), so no side bands;
+   the uncropped photo is always available in "View full size". */
+.stage{width:min(100%,calc(68vh * 4 / 3));aspect-ratio:4/3;margin:0 auto;border:1px solid var(--line);border-radius:20px;background:#120c08}
+@media (orientation:portrait){.stage{width:min(100%,calc(54vh * 4 / 3));aspect-ratio:4/3}}
+.stage img{object-fit:cover}
+.stage .stagebg{display:none}
+.gal .strip{width:min(100%,calc(68vh * 4 / 3));margin:0 auto}
+@media (orientation:portrait){.gal .strip{width:min(100%,calc(54vh * 4 / 3))}}
 .prow{gap:14px}.prow b{text-align:right}
 .hint.zoom{border:1px solid rgba(255,255,255,.22);color:var(--text);font:inherit;font-size:13px;padding:8px 14px;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .hint.zoom:hover{background:rgba(255,122,47,.6)}
@@ -222,11 +225,8 @@ input.rate{width:92px;text-align:center}
   .btile .bo{font-size:11px}
   .btile .bc{font-size:26px;top:14px;right:14px}
   .emblem{width:46px;height:46px;font-size:21px}
-  .frow{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px;margin-right:-16px;padding-right:16px}
-  .frow::-webkit-scrollbar{display:none}
-  .frow .pill{flex:none}
-  .flabel{width:auto;margin-right:6px}
-  .frow:last-child{flex-wrap:wrap;overflow:visible}
+  .frow{flex-wrap:wrap;gap:8px}
+  .flabel{width:100%;margin:2px 0 0}
   .grid{grid-template-columns:1fr}
   .info{padding:20px}
   .info h2{font-size:34px}
