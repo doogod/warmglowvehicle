@@ -83,6 +83,7 @@ h1 em{font-style:italic;background:linear-gradient(100deg,var(--glow2),var(--glo
 .btile:hover .emblem.logo img,.btile.on .emblem.logo img{opacity:1}
 .btile .wm img{height:132px;width:auto;max-width:200px;object-fit:contain;opacity:.05;filter:none}
 .btile.on .wm img{opacity:.08}
+.btile.all .emblem.logo img{filter:drop-shadow(0 0 10px rgba(243,140,71,.4))}
 @media (max-width:700px){.emblem.logo{height:36px}.emblem.logo img{max-height:36px;max-width:80px}.btile .wm img{height:104px}}
 .btile .bn{font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:14px}
 .btile .bo{font-size:12px;color:var(--dim);margin-top:2px}
@@ -378,10 +379,10 @@ function renderFilters(){
   const br=$("#brandRow"); br.innerHTML="";
   ["ALL",...BRAND_ORDER].forEach(k=>{
     const m=BRAND_META[k], n=k==="ALL"?CARS.length:CARS.filter(c=>c.brand===k).length;
-    const logo=k!=="ALL"&&BRAND_LOGOS[k];
-    const b=document.createElement("button"); b.className="btile"+(brandF===k?" on":""); b.style.setProperty("--tint",m.tint);
+    const logo=k==="ALL"?"assets/logos/warmglow.png":BRAND_LOGOS[k];
+    const b=document.createElement("button"); b.className="btile"+(k==="ALL"?" all":"")+(brandF===k?" on":""); b.style.setProperty("--tint",m.tint);
     const ph=(CARS.filter(c=>(k==="ALL"||c.brand===k)&&c.pick)[0]||CARS.find(c=>k==="ALL"||c.brand===k)||{imgs:[""]}).imgs[0];
-    b.innerHTML=`<span class="wm">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="emblem${logo?" logo":""}">${logo?`<img src="${logo}" alt="${BRANDS[k]}">`:m.mono}</span><span class="bc">${n}</span><span><div class="bn">${k==="ALL"?t("allBrands"):BRANDS[k]}</div><div class="bo">${k==="ALL"?t("allSub"):m.o}</div></span>`;
+    b.innerHTML=`<span class="wm">${logo?`<img src="${logo}" alt="">`:m.mono}</span><span class="emblem${logo?" logo":""}">${logo?`<img src="${logo}" alt="${k==="ALL"?"WARMGLOW":BRANDS[k]}">`:m.mono}</span><span class="bc">${n}</span><span><div class="bn">${k==="ALL"?t("allBrands"):BRANDS[k]}</div><div class="bo">${k==="ALL"?t("allSub"):m.o}</div></span>`;
     b.onclick=()=>{brandF=k; modelF="ALL"; renderFilters(); renderGrid();}; br.appendChild(b);
   });
   const pr=$("#pickRow"); pr.querySelectorAll(".pill").forEach(e=>e.remove());
