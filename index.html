@@ -98,7 +98,7 @@ h1 em{font-style:italic;background:linear-gradient(100deg,var(--glow2),var(--glo
 .tag.value{background:linear-gradient(135deg,rgba(255,201,87,.25),rgba(243,140,71,.2));color:#ffe2b0}
 .badge.nw{top:48px;background:rgba(108,220,160,.18);border-color:rgba(108,220,160,.45);color:#b9f5d4;font-weight:600}
 .badge.hold{top:auto;bottom:14px;left:14px;color:#ffe2b0;border-color:rgba(255,201,87,.35)}
-.badge.pk{left:auto;right:14px;top:48px;background:linear-gradient(135deg,var(--glow2),var(--glow1));color:#1a0d05;border:none;font-weight:600}
+.badge.pk{left:auto;right:14px;top:14px;background:linear-gradient(135deg,var(--glow2),var(--glow1));color:#1a0d05;border:none;font-weight:600}
 .pickbox{border-radius:16px;padding:14px 16px;margin-bottom:18px;border:1px solid rgba(255,201,87,.3);background:rgba(255,201,87,.06);font-size:13px;color:var(--muted);line-height:1.6}
 .pickbox b{color:var(--glow2);font-weight:600;letter-spacing:.06em}
 /* Filters */
@@ -423,7 +423,7 @@ function renderGrid(keep){
   $("#grid").innerHTML=l.length?l.map((c,i)=>`
    <article class="card" style="animation-delay:${Math.min(i,12)*45}ms" data-id="${c.id}">
      <div class="thumb">
-       <span class="badge">${c.reg}</span>${c.isNew?`<span class="badge nw">${t("newBadge")}</span>`:""}<span class="badge r">${c.src==="cornes"?"Cornes":"Carsensor"}</span>${c.pick?`<span class="badge pk">★ ${t("pickBadge")}</span>`:""}${c.elig==="hold"?`<span class="badge hold">⏳ ${t("holdTo")} ${c.holdUntil}</span>`:""}
+       <span class="badge">${c.reg}</span>${c.isNew?`<span class="badge nw">${t("newBadge")}</span>`:""}${c.pick?`<span class="badge pk">★ ${t("pickBadge")}</span>`:""}${c.elig==="hold"?`<span class="badge hold">⏳ ${t("holdTo")} ${c.holdUntil}</span>`:""}
        <img loading="lazy" src="${c.imgs[0]}" alt="${BRANDS[c.brand]} ${c.model}" onerror="this.style.opacity=0">
      </div>
      <div class="cbody">
