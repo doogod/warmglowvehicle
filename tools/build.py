@@ -94,7 +94,7 @@ def unruns(r):
     return out
 
 def cs_rec(x):
-    b = BMAP[x['b']]; y = int((x.get('year') or '0')[:4] or 0)
+    b = BMAP[x['b']]; y = int((x.get('year') or '0').strip()[:4] or 0)
     m, f = model_cs(x)
     mi = re.search(r'(\d{4})\(R\d+\)年(\d{1,2})月', x.get('insp') or ''); insp = f"{mi.group(1)}/{int(mi.group(2)):02d}" if mi else ''
     if not y and insp: y = int(insp[:4]) - 3

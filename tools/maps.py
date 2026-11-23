@@ -153,7 +153,13 @@ def model_cs(x):
         if m=='ウルス':
             v=pick(h[:30],[(r'ペルフォルマンテ|Performante','Performante'),(r'\bSE\b|ＳＥ|ウルスSE','SE'),(r'ウルス\s*S|Urus S|^S\b','S')],'')
             return ('Urus '+v).strip(),'Urus'
-        return 'Huracán Sterrato','Huracán'
+        if 'ステラート' in m or re.search(r'ステラート|Sterrato',h[:40],re.I): return 'Huracán Sterrato','Huracán'
+        if m.startswith('ウラカン'):
+            v=pick(h[:40],[(r'STO','STO'),(r'テクニカ|Tecnica','Tecnica'),(r'EVO.*(スパイダー|Spyder)|(スパイダー|Spyder).*EVO','EVO Spyder'),(r'EVO','EVO'),(r'スパイダー|Spyder','Spyder')],'')
+            return ('Huracán '+v).strip(),'Huracán'
+        if 'レヴエルト' in m: return 'Revuelto','Revuelto'
+        if 'テメラリオ' in m: return 'Temerario','Temerario'
+        return m,m
     if b=='RR':
         n=RR_M.get(m,m)
         if re.search(r'シリーズ\s*(II|2|Ⅱ)|Series\s*(II|2|Ⅱ)',h,re.I) and ('Cullinan' in n or 'Ghost' in n): n+=' Series II'
