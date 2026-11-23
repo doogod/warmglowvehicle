@@ -170,6 +170,8 @@ for id_ in ids:
     if cornes_lhd is not None and rec.get('vin'): rec['flag'] = is_cornes_shop(rec) and key in cornes_lhd
     out.append(rec)
 
+for r in out:                                 # 911 groups may change over time – recompute for every car
+    if r['brand'] == 'PORSCHE': r['family'] = po_family(r['model'])
 # first = date the car was first seen (Malaysia date of the update). NEW = first seen today or yesterday.
 TODAY = today().isoformat()
 for r in out:

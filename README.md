@@ -83,7 +83,7 @@
 
 ## 3. 精选（WARMGLOW Picks）方法
 
-1. 按车型系列分组（如 911、911 Cabriolet、Roma Spider、Urus、Grecale、Artura…）
+1. 按车型系列分组（如 911 Carrera、911 GTS、911 GT3、911 Turbo、911 Cabriolet、Roma Spider、Urus、Grecale、Artura…）
 2. 每个系列内，对税前价格取对数，用 **版本（固定效应）+ 年份 + log(里程)** 做岭回归，得到每台车的「预期价格」；样本少于 4 台时用中位数
 3. 偏差 = 实际税前价 ÷ 预期价 − 1（负数 = 比市场便宜）
 4. 每个系列分配 1–3 个名额（`round(√n × 0.32)`，至少 1、至多 3），保证**每个车型都有精选**
@@ -186,3 +186,4 @@ tools/
 | 2026-11-23 | 每日增量更新（第二次）：692 台（新增 12、售出 7、调价 16）；Cornes 无变化；修复 Carsensor 兰博基尼型号识别（非 Urus 一律被标成 Huracán Sterrato，现区分 Tecnica / EVO / STO 等）及年式前导空格导致年份解析为 202 的问题 |
 | 2026-11-24 | 推荐排序加入上架时间：近 2 天新上架的车置顶并显示 NEW 标签，之后一周内加分逐日递减；`cars.json` 新增 `first` 首次出现日期；来源筛选「本次更新新增」改为「近 2 天新上架」 |
 | 2026-11-24 | 车辆列表卡片去掉图片右上角的来源标签（Cornes / Carsensor），「精选」标签上移到右上角 |
+| 2026-11-24 | Porsche 911 车型筛选细分：911 Carrera / 911 GTS / 911 GT3（含 Touring、RS）/ 911 GT2 RS / 911 Turbo（含 Turbo S、Cabriolet）/ 911 Special（Dakar、S/T、Sport Classic、50 Years）/ 911 Cabriolet / 911 Targa；估值分组随之细分，精选 46 → 51 台 |

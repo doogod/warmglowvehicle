@@ -97,6 +97,7 @@ def model_po(m,h):
     tg=re.search(r'タルガ\s*4\s*GTS|タルガ4GTS',h) and 'Targa 4 GTS' or (re.search(r'タルガ\s*4\s*S|タルガ4S',h) and 'Targa 4S') or (('タルガ' in h[:20]) and 'Targa 4')
     if 'ダカール' in m or 'ダカール' in h[:15]: v='Dakar'
     elif tg: v=tg
+    elif re.search(r'GT2\s*RS|GT2RS',h[:25]): v='GT2 RS'
     elif re.search(r'GT3\s*RS|GT3RS',h): v='GT3 RS'
     elif 'GT3' in h[:15]: v='GT3 Touring' if 'ツーリング' in h[:25] else 'GT3'
     elif re.search(r'S/T',h[:15]): v='S/T'
@@ -112,8 +113,19 @@ def model_po(m,h):
     elif re.search(r'カレラ\s*T\b|カレラT',h): v='Carrera T'
     else: v='Carrera'
     name='911 '+v+(' Cabriolet' if cab and not v.startswith('Targa') else '')
-    fam='911 Cabriolet' if cab and not v.startswith('Targa') else ('911 Targa' if v.startswith('Targa') else '911')
-    return name,fam
+    return name,po_family(name)
+
+def po_family(name):
+    """911 model-filter groups: GT2 RS / GT3 (incl. Touring, RS) / Turbo / special editions / GTS / Carrera / Cabriolet / Targa."""
+    v=name.replace('911 ','',1)
+    if v.startswith('GT2'): return '911 GT2 RS'
+    if v.startswith('GT3'): return '911 GT3'
+    if v.startswith('Turbo'): return '911 Turbo'
+    if v.startswith(('Dakar','S/T','Sport Classic','50 Years')): return '911 Special'
+    if v.startswith('Targa'): return '911 Targa'
+    if v.endswith('Cabriolet'): return '911 Cabriolet'
+    if 'GTS' in v: return '911 GTS'
+    return '911 Carrera'
 
 def pick(h,opts,default=''):
     for k,v in opts:
