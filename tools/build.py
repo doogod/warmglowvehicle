@@ -22,6 +22,7 @@ from common import *
 from maps import *
 from shops import SHOP_EN
 
+BASELINE_FIRST = '2026-11-21'               # cars already listed when tracking started
 state = load(STATE, [])
 prev = {c['id']: c for c in state}
 cs_list = load(os.path.join(SCRAPE, 'cs_list.json'))
@@ -169,15 +170,16 @@ for id_ in ids:
     if cornes_lhd is not None and rec.get('vin'): rec['flag'] = is_cornes_shop(rec) and key in cornes_lhd
     out.append(rec)
 
-if cs_list is not None or cornes_in:          # a real update: NEW = not in the previous version
-    for r in out: r['isNew'] = r['id'] not in prev
-else:
-    for r in out: r['isNew'] = prev.get(r['id'], {}).get('isNew', False)
+# first = date the car was first seen (Malaysia date of the update). NEW = first seen today or yesterday.
+TODAY = today().isoformat()
+for r in out:
+    r['first'] = prev.get(r['id'], {}).get('first') or (TODAY if r['id'] not in prev else BASELINE_FIRST)
+    r['isNew'] = days_since(r['first']) <= NEW_DAYS
 
 save_state(out)
 save(os.path.join(DATA, 'data.json'), out)
 now = {r['id'] for r in out}
-print('total', len(out), '| new', sum(r['id'] not in prev for r in out), '| removed (sold)', len(set(prev) - now),
+print('total', len(out), '| new', sum(r['id'] not in prev for r in out), '| NEW badge', sum(r['isNew'] for r in out), '| removed (sold)', len(set(prev) - now),
       '| dup dropped', dropped, '| 404', gone, '| flagged', sum(r['flag'] for r in out))
 if missing: print('WARNING', len(missing), 'Carsensor cars have no detail yet – run `python3 build.py todo`:', missing[:10])
 print(Counter(r['brand'] for r in out))

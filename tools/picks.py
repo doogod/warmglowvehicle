@@ -1,5 +1,5 @@
 import json,math,os,datetime,numpy as np
-from common import DATA
+from common import DATA, NEW_DAYS, BOOST_DAYS, days_since
 from collections import defaultdict,Counter
 d=json.load(open(os.path.join(DATA,'data.json')))
 _t=datetime.date.today(); NOWM=_t.year*12+_t.month
@@ -46,6 +46,7 @@ json.dump(picks,open(os.path.join(DATA,'picks.json'),'w'))
 
 # ---- Recommended order (default sort on the site). Rough, relative only:
 #  brand weight (Ferrari/Lamborghini first) + price level (dearer first) + value vs. market (cheaper than expected first)
+#  + freshness: cars first seen today/yesterday (NEW) come first, then a boost fading over 7 days
 BRAND_W={'FERRARI':3.0,'LAMBO':3.0,'ROLLSROYCE':1.6,'MCLAREN':1.2,'BENTLEY':1.0,'PORSCHE':0.6,'MASERATI':0.0}
 fam_med={}
 for (b,f),arr in fams.items():
@@ -58,6 +59,9 @@ for r in d:
     if r['id'] in picks: sc+=0.4
     if r['flag']: sc-=1
     if age(r)<12: sc-=0.2                                                     # still has to wait in Japan
+    ds=days_since(r.get('first'))                                            # freshness:
+    if ds<=NEW_DAYS: sc+=10                                                   #  new today/yesterday -> top block
+    elif ds<BOOST_DAYS: sc+=1.5*(BOOST_DAYS-ds)/(BOOST_DAYS-NEW_DAYS)         #  then fades out over a week
     rec[r['id']]=round(sc,2)
 json.dump(rec,open(os.path.join(DATA,'rec.json'),'w'))
 print(len(picks)); print(Counter(t for p in picks.values() for t in p['t']))
