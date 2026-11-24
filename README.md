@@ -15,12 +15,13 @@
 |---|---|
 | 数据来源 | Cornes Motors 官网 `cornesmotors.com/usedcar/`（Bentley / Lamborghini / Rolls-Royce）与 `/usedcar/ferrari`；Carsensor `carsensor.net`（全国经销商） |
 | 品牌 | Ferrari、Lamborghini、Rolls-Royce、Porsche、Bentley、Maserati、McLaren |
-| Porsche | **只收录 911**（Carsensor 车系 911 / 911 カブリオレ / 911 ダカール，含 Targa、GT3、Turbo 等） |
+| Porsche | **只收录 911**（Carsensor 车系 911 / 911 カブリオレ / 911 ダカール，含 Targa、GT3、Turbo 等）。网页车型筛选细分为：911 Carrera（Carrera / S / 4 / 4S / T）、911 GTS（Carrera GTS / Carrera 4 GTS）、911 GT3（含 Touring、RS）、911 GT2 RS、911 Turbo（含 Turbo S、Turbo Cabriolet）、911 Special（Dakar、S/T、Sport Classic、50 Years）、911 Cabriolet、911 Targa；某组暂无车时不显示该按钮 |
 | 方向盘 | 仅右舵（Cornes：`handlePosition = 右`；Carsensor：搜索条件 `ST=R`） |
 | 年份 | 首次登记 2022 年及以后（Carsensor：`YMIN=2022`） |
 | 马来西亚进口规则 | 马来西亚只允许登记满 12 个月的二手车进口。我们可先购买并暂放日本等待满一年，因此：<br>• 登记 ≥ 12 个月：标「可立即进口」<br>• 登记 6–12 个月：保留，标「需在日本等待」及可进口月份（登记月 + 12 个月）<br>• 登记 < 6 个月：暂不显示<br>规则在网页中按**打开当天日期**动态计算，车辆满 6 个月后自动出现 |
 | 去重 | Cornes 自家车辆同时挂在 Carsensor 上时只保留一条（Cornes 官网数据优先）。匹配条件：品牌 + 车架号末三位 + 登记年份，且 Carsensor 店铺属于 Cornes 系展厅 |
 | 左右舵冲突 | 同一车架号在 Carsensor 标右舵、Cornes 官网标左舵时，仍收录，但详情页提示「请确认」，且不进入精选 |
+| 车型识别 | 型号名称含版本（如 911 Carrera 4 GTS Cabriolet、Urus Performante、Huracán Tecnica、Roma Spider）。Carsensor 按车系 + 标题解析（`tools/maps.py`），Lamborghini 区分 Urus / Urus S / SE / Performante、Huracán EVO / EVO Spyder / Tecnica / STO / Sterrato、Revuelto、Temerario |
 | 新车源判断 | 每次更新与上一版的车源编号（Cornes `sfid` / Carsensor `AU…` 编号）对比：新出现的记录首次出现日期 `first`，近 2 天（今天/昨天）新上架的标「新 / NEW」并在推荐排序中置顶；已下架的删除 |
 
 ### Carsensor 品牌代码
@@ -40,20 +41,23 @@
 
 ### 品牌筛选
 - 8 个按钮：全部品牌 + 7 个品牌，类似 Cornes 官网的品牌卡片
-- 每个按钮：圆形字母徽章、品牌名、产地、车辆数、半透明大字母水印、品牌色光晕
+- 每个按钮：品牌 logo、品牌名、产地、车辆数、半透明 logo 水印、品牌色光晕；「全部品牌」按钮使用 WARMGLOW logo
 - **暂时不使用车辆照片作为按钮背景**（已去掉）
 - 品牌按钮使用 7 个品牌 logo（`assets/logos/`，来源 filippofilip95/car-logos-dataset），统一处理成暖象牙色单色版本，按钮左上角显示，右下角为极淡的水印；路径在 `index.html` 的 `BRAND_LOGOS`。logo 为各品牌商标，仅用于标示车辆品牌
 
 ### 其他筛选
 - **精选**：全部车辆 / ★ WARMGLOW 精选 / 按标签（同车型首选、超值、价格合理、低里程、准新车、Cornes 认证、稀有）
-- **车型**：选中品牌后出现该品牌的车型系列
+- **车型**：选中品牌后出现该品牌的车型系列（Porsche 911 细分见第 1 节）
 - **马来西亚进口**：全部 / 可立即进口 / 需在日本等待
-- **来源**：全部 / Cornes Motors / Carsensor / 本次更新新增
-- **排序**：**推荐排序（默认）**、登记日期最新、价格低→高、价格高→低、里程最少
+- **来源**：全部 / Cornes Motors / Carsensor / 近 2 天新上架
+- **排序**：**推荐排序（默认，近 2 天新上架的车排最前，见第 3 节）**、登记日期最新、价格低→高、价格高→低、里程最少
 - **汇率**：1 JPY = X MYR，默认 `0.0258`（约值，可在页面修改，记忆在浏览器本地）
 
 ### 车辆卡片
-登记年月、来源、★精选、新上架、需等待进口的月份、车型名、精选标签、里程、外观色、所在地、税前日元价、税前马币价
+- 照片左上：登记年月；其下「新 / NEW」标签（近 2 天新上架）
+- 照片右上：★ 精选（**不显示来源**，来源只在详情页和来源筛选中体现）
+- 照片左下：需在日本等待进口时显示可进口月份
+- 照片下方：车型名、精选标签、里程、外观色、所在地、税前日元价、税前马币价
 
 ### 详情页
 - **上下排列**：照片在上（4:3 画框、居中、两侧留白、圆角，照片铺满画框不留灰边；高度约占屏幕 68%（竖屏约 54%），下方缩略图和车辆信息可直接露出；完整原图在「查看大图」中），缩略图在下，车辆信息在最下（宽屏分左右两栏：价格 / 参数）
@@ -89,7 +93,7 @@
 4. 每个系列分配 1–3 个名额（`round(√n × 0.32)`，至少 1、至多 3），保证**每个车型都有精选**
 5. 排序分数 = −偏差×100，加分：里程 ≤ 1,000 km（+2）、Cornes 车源（+1.5）、已可进口（+1）；扣分：里程 > 25,000 km（−2）、> 40,000 km（−4）
 6. 只从「登记满 6 个月、无左右舵冲突」的车中挑选
-7. 当前共 46 台（33 个车型系列，原需求「约 30 台，无需严格」）
+7. 当前共 51 台（37 个车型系列，原需求「约 30 台，无需严格」；911 细分后由 46 台增至 51 台）
 
 标签规则：同车型首选（系列第 1 名）、超值（偏差 ≤ −5% 且同系列 ≥ 3 台）、价格合理（−5% ~ +2%）、低里程（≤ 1,000 km）、准新车（≤ 300 km）、Cornes 认证（Cornes 车源）、稀有（同系列 ≤ 2 台）
 
@@ -133,11 +137,16 @@
 2. **Cornes**（分别在 `/usedcar` 与 `/usedcar/ferrari`）：粘贴 `tools/scrape/cornes.js`，运行 `await WG.cornesLoadAll()`，把 `WG.cornesDump()` 保存为 `data/scrape/cornes_page_main.json` / `cornes_page_ferrari.json`
 3. `cd tools && python3 build.py todo` → 列出需要抓详情的新车
 4. 浏览器中：Carsensor `await WG.csDetails([...])` → `WG.dumpFull()` 保存为 `data/scrape/cs_detail.json`；Cornes `await WG.cornesGallery([...])` → `WG.dumpGal()` 保存为 `data/scrape/cornes_gal.json`
-5. `python3 build.py && python3 picks.py && python3 emit.py`
-   - `build.py`：合并、翻译、去重、标记新车源、删除已售 → `data/cars.json`、`data/data.json`
-   - `picks.py`：计算精选 → `data/picks.json`
+5. `python3 build.py && python3 picks.py && python3 emit.py YYYY-MM-DD`（马来西亚当天日期）
+   - `build.py`：合并、翻译、去重、记录首次出现日期 `first` 并标记 NEW（近 2 天）、删除已售、重算 911 车型分组 → `data/cars.json`、`data/data.json`；日期默认取马来西亚时间，可用环境变量 `WG_DATE=YYYY-MM-DD` 指定
+   - `picks.py`：计算精选和推荐排序分数 → `data/picks.json`、`data/rec.json`
    - `emit.py`：写入 `index.html` 的 `PICKS` / `DATA` 两行，并更新页脚和本文件的「最近更新」日期
-6. 提交并推送到 `main`（`data/scrape/` 不提交），GitHub Pages 约 1–2 分钟后生效
+   - 检查：总数比上次减少超过 15%，或输出 `WARNING`（缺详情），说明抓取不完整，不要推送
+6. 在第 7 节追加一行更新记录，提交并推送到 `main`（`data/scrape/` 不提交），GitHub Pages 约 1–2 分钟后生效
+
+省流技巧：
+- Cornes 两个页面的右舵车（`sfid` + 价格）与 `data/cars.json` 完全一致时，可以不写 `cornes_page_*.json`，`build.py` 会沿用上一版 Cornes 数据
+- Carsensor 列表中不在 `cars.json` 里的车，很多是 Cornes 自家车（本体价、总额与某台 Cornes 车完全相同）或左舵车，它们最终会被去重/过滤；价格与 Cornes 车完全一致的可以从 `cs_list.json` 中剔除，不必抓详情页
 
 ### 5.3 全量刷新（每周/每月）
 同上，但第 4 步对**所有**车执行：Carsensor `WG.csDetails(WG.list.map(x => x.id))`，分批用 `WG.dumpCompact(ids)` 导出（只含照片、车架号、方向盘、价格）；Cornes `WG.cornesGallery()`（不带参数 = 本页全部右舵车）。
