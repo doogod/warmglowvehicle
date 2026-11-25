@@ -5,7 +5,7 @@
 - 线上地址：https://doogod.github.io/warmglowvehicle/
 - 托管：GitHub Pages（`main` 分支，根目录 `/`）
 - 网页为单文件：`index.html`（数据内嵌，图片直接引用来源网站的原图地址）
-- 最近一次数据更新：2026-11-25
+- 最近一次数据更新：2026-11-26
 
 ---
 
@@ -197,3 +197,4 @@ tools/
 | 2026-11-24 | 车辆列表卡片去掉图片右上角的来源标签（Cornes / Carsensor），「精选」标签上移到右上角 |
 | 2026-11-24 | Porsche 911 车型筛选细分：911 Carrera / 911 GTS / 911 GT3（含 Touring、RS）/ 911 GT2 RS / 911 Turbo（含 Turbo S、Cabriolet）/ 911 Special（Dakar、S/T、Sport Classic、50 Years）/ 911 Cabriolet / 911 Targa；估值分组随之细分，精选 46 → 51 台 |
 | 2026-11-25 | 每日增量更新：691 台（新增 7、售出 8、调价 3）；Cornes 新增 Ferrari Roma、Bentley Bentayga EWB Azure，下架 Flying Spur Azure、Urus Performante、Urus SE；Carsensor 新增 Continental GT Speed / Flying Spur Azure（Cornes 店，仅 1–2 张照片）、Continental GT Azure、Maserati Ghibli GT Hybrid、Grecale Modena |
+| 2026-11-26 | 每日增量更新：693 台（新增 7、售出 5、调价 6）；Carsensor 新增 Urus SE、Maserati Grecale GT、911 Turbo S / Carrera S / GT3 RS / Turbo / Carrera 4S Cabriolet，售出 Roma Spider 及 3 台 911；Cornes 下架 Rolls-Royce Black Badge Cullinan Series II，其余无变化 |
