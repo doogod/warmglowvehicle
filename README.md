@@ -61,7 +61,7 @@
 
 ### 详情页
 - **上下排列**：照片在上（4:3 画框、居中、两侧留白、圆角，照片铺满画框不留灰边；高度约占屏幕 68%（竖屏约 54%），下方缩略图和车辆信息可直接露出；完整原图在「查看大图」中），缩略图在下，车辆信息在最下（宽屏分左右两栏：价格 / 参数）
-- 照片：左右滑动切换；点击照片或「⤢ 查看大图」按钮进入全屏大图（尽可能铺满屏幕），键盘左右键 / Esc
+- 照片：左右滑动切换——照片跟手移动，松手后滑到下一张或回弹（滑动超过约 1/5 宽度或快速轻扫即翻页），前后相邻照片预先加载，翻页时不闪白；上下拖动仍可滚动页面；箭头按钮、键盘左右键同样带滑动动画，点缩略图则快速淡入切换。点击照片或「⤢ 查看大图」按钮进入全屏大图（同样可滑动），点空白处或 × / Esc 关闭
 - 显示内容：
   - 车辆型号名称（含版本，如 911 Carrera 4 GTS Cabriolet）
   - 车辆图片（来源页面上的全部照片，含内饰；Carsensor 常见 30–50 张，Cornes 常见 40–55 张）
@@ -198,3 +198,4 @@ tools/
 | 2026-11-24 | Porsche 911 车型筛选细分：911 Carrera / 911 GTS / 911 GT3（含 Touring、RS）/ 911 GT2 RS / 911 Turbo（含 Turbo S、Cabriolet）/ 911 Special（Dakar、S/T、Sport Classic、50 Years）/ 911 Cabriolet / 911 Targa；估值分组随之细分，精选 46 → 51 台 |
 | 2026-11-25 | 每日增量更新：691 台（新增 7、售出 8、调价 3）；Cornes 新增 Ferrari Roma、Bentley Bentayga EWB Azure，下架 Flying Spur Azure、Urus Performante、Urus SE；Carsensor 新增 Continental GT Speed / Flying Spur Azure（Cornes 店，仅 1–2 张照片）、Continental GT Azure、Maserati Ghibli GT Hybrid、Grecale Modena |
 | 2026-11-26 | 每日增量更新：693 台（新增 7、售出 5、调价 6）；Carsensor 新增 Urus SE、Maserati Grecale GT、911 Turbo S / Carrera S / GT3 RS / Turbo / Carrera 4S Cabriolet，售出 Roma Spider 及 3 台 911；Cornes 下架 Rolls-Royce Black Badge Cullinan Series II，其余无变化 |
+| 2026-11-25 | 详情页与大图的照片滑动改为跟手轮播（3 张预载、GPU 位移动画、按速度判断轻扫、回弹），改善 iPad 上切换生硬、闪白的问题 |
