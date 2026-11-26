@@ -5,7 +5,7 @@
 - 线上地址：https://doogod.github.io/warmglowvehicle/
 - 托管：GitHub Pages（`main` 分支，根目录 `/`）
 - 网页为单文件：`index.html`（数据内嵌，图片直接引用来源网站的原图地址）
-- 最近一次数据更新：2026-11-26
+- 最近一次数据更新：2026-11-27
 
 ---
 
@@ -199,3 +199,4 @@ tools/
 | 2026-11-25 | 每日增量更新：691 台（新增 7、售出 8、调价 3）；Cornes 新增 Ferrari Roma、Bentley Bentayga EWB Azure，下架 Flying Spur Azure、Urus Performante、Urus SE；Carsensor 新增 Continental GT Speed / Flying Spur Azure（Cornes 店，仅 1–2 张照片）、Continental GT Azure、Maserati Ghibli GT Hybrid、Grecale Modena |
 | 2026-11-26 | 每日增量更新：693 台（新增 7、售出 5、调价 6）；Carsensor 新增 Urus SE、Maserati Grecale GT、911 Turbo S / Carrera S / GT3 RS / Turbo / Carrera 4S Cabriolet，售出 Roma Spider 及 3 台 911；Cornes 下架 Rolls-Royce Black Badge Cullinan Series II，其余无变化 |
 | 2026-11-25 | 详情页与大图的照片滑动改为跟手轮播（3 张预载、GPU 位移动画、按速度判断轻扫、回弹），改善 iPad 上切换生硬、闪白的问题 |
+| 2026-11-27 | 每日增量更新：694 台（新增 14、售出 13、调价 3）；Carsensor 新增 296 GTB、Roma、Roma Spider、Rolls-Royce Spectre、Ghibli Trofeo、GranTurismo Trofeo、750S Spider 及 5 台 911（Carrera ×2 / Carrera T / Targa 4 / Carrera 4 GTS），售出 Roma Spider、7 台 Maserati（Grecale ×5 / Levante ×2）、McLaren GTS、911 Carrera T；Cornes 新增 Continental GT V8 Cornes 60th Edition、Continental GT Speed（原 Carsensor 上同车 2 台随之去重），Ferrari 页无变化 |
